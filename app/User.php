@@ -48,6 +48,16 @@ class User extends Authenticatable
         return $this->hasRole(RoleType::POLICE);
     }
 
+    public function isBrgyPolice(): bool
+    {
+        return $this->hasRole(RoleType::BRGYPOLICE);
+    }
+
+    public function isNormalUser(): bool
+    {
+        return $this->hasRole(RoleType::NORMALUSER);
+    }
+
     public function rank()
     {
         return $this->belongsTo(Rank::class);

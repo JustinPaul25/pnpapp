@@ -31,7 +31,7 @@
                         @endif
                     @else
                         <span>
-                            <a href="{{ route('form') }}" class="{{ Request::segment(1) == 'form' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
+                            {{-- <a href="{{ route('form') }}" class="{{ Request::segment(1) == 'form' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Fill-up Form
                             </a>
                             <a href="{{ route('applicant') }}" class="{{ Request::segment(1) == 'applicants' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
@@ -51,7 +51,7 @@
                             </a>
                             <a href="{{ route('password') }}" class="{{ Request::segment(1) == 'password' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Change Password
-                            </a>
+                            </a> --}}
                         </span>
                         <a href="{{ route('logout') }}"
                            class="no-underline hover:underline"

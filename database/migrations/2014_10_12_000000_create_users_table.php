@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->unsignedBigInteger('rank_id')->nullable();
             $table->string('email')->unique();
-            $table->date('birst_date');
-            $table->string('mobile_no');
-            $table->longText('description');
+            $table->date('birst_date')->nullable();
+            $table->string('mobile_no')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
