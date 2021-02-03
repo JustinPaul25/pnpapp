@@ -101,14 +101,14 @@
                             </div>
 
                             <div class="flex flex-wrap mb-4">
-                                <label for="mobile_no" class="block text-gray-700 text-sm font-bold">
+                                <label for="contact_no" class="block text-gray-700 text-sm font-bold">
                                     {{ __('Mobile No.') }}:
                                 </label>
         
-                                <input id="first_name" type="text" class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('mobile_no') @enderror"
-                                    name="mobile_no" value="{{ old('mobile_no') }}" required autocomplete="first_name" autofocus>
+                                <input id="first_name" type="text" class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('contact_no') @enderror"
+                                    name="contact_no" value="{{ old('contact_no') }}" required autocomplete="fcontact_no" autofocus>
         
-                                @error('mobile_no')
+                                @error('contact_no')
                                 <p class="text-red-500 text-xs italic mt-4">
                                     {{ $message }}
                                 </p>

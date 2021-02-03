@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->unsignedBigInteger('rank_id')->nullable();
             $table->string('email')->unique();
-            $table->date('birst_date')->nullable();
+            $table->date('birth_date')->nullable();
             $table->string('mobile_no')->nullable();
             $table->longText('description')->nullable();
             $table->timestamp('email_verified_at')->nullable();
