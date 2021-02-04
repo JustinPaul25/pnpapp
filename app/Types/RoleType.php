@@ -4,18 +4,16 @@ namespace App\Types;
 
 final class RoleType
 {
-    const ADMINISTRATOR = 'Administrator';
-    const POLICE = 'Police';
-    const BRGYPOLICE = 'Barangay Police';
-    const NORMALUSER = 'Normal User';
+    const POLICEADMIN = 'Police Administrator';
+    const BRGYADMIN = 'Barangay Administrator';
+    const COMPLAINANT = 'Complainant';
 
     public static function toArray(): array
     {
         return [
-            self::ADMINISTRATOR,
-            self::POLICE,
-            self::BRGYPOLICE,
-            self::NORMALUSER
+            self::POLICEADMIN,
+            self::BRGYADMIN,
+            self::COMPLAINANT
         ];
     }
 }

@@ -38,24 +38,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin(): bool
+    public function isPoliceAdmin(): bool
     {
-        return $this->hasRole(RoleType::ADMINISTRATOR);
+        return $this->hasRole(RoleType::POLICEADMIN);
     }
 
-    public function isPolice(): bool
+    public function isBrgyAdmin(): bool
     {
-        return $this->hasRole(RoleType::POLICE);
+        return $this->hasRole(RoleType::BRGYADMIN);
     }
 
-    public function isBrgyPolice(): bool
+    public function isComplainant(): bool
     {
-        return $this->hasRole(RoleType::BRGYPOLICE);
-    }
-
-    public function isNormalUser(): bool
-    {
-        return $this->hasRole(RoleType::NORMALUSER);
+        return $this->hasRole(RoleType::COMPLAINANT);
     }
 
     public function rank()
