@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Asumbrado | Realty Services</title>
+    <title>PNP | App</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,8 +20,7 @@
         <header class="bg-gray-900 py-4">
             <div class="container mx-auto flex justify-between items-center px-3">
                 <div>
-                    <p class="text-xl font-bold text-yellow-500">ASUMBRADO</p>
-                    <p class="mt-2 text-xs text-gray-300">Realty Services</p>
+                    <p class="text-xl font-bold text-yellow-500">PNP</p>
                 </div>
                 <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
@@ -31,13 +30,13 @@
                         @endif
                     @else
                         <span>
-                            {{-- <a href="{{ route('form') }}" class="{{ Request::segment(1) == 'form' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
-                                Fill-up Form
+                            <a href="{{ route('dashboard') }}" class="{{ Request::segment(1) == 'dashboard' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
+                                Dashboard
                             </a>
-                            <a href="{{ route('applicant') }}" class="{{ Request::segment(1) == 'applicants' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
-                                Buyers
+                            <a href="{{ route('reports') }}" class="{{ Request::segment(1) == 'reports' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
+                                Crime Reports
                             </a>
-                            <a href="{{ route('lot') }}" class="{{ Request::segment(1) == 'lot' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
+                            {{--<a href="{{ route('lot') }}" class="{{ Request::segment(1) == 'lot' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Lots
                             </a>
                             <a href="{{ route('agent') }}" class="{{ Request::segment(1) == 'agents' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">

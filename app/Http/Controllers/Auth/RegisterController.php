@@ -72,7 +72,6 @@ class RegisterController extends Controller
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'rank_id' => $data['rank_id'],
             'birth_date' => $data['birth_date'],
             'mobile_no' => $data['contact_no'],
             'description' => $data['description'],
@@ -80,7 +79,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->assignRole(RoleType::NORMALUSER);
+        $user->assignRole(RoleType::COMPLAINANT);
 
         return $user;
     }

@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CaseReport extends Model
 {
-    //
+    protected $guarded = [];
+
+    
 }

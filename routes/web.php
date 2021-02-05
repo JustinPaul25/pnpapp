@@ -22,3 +22,9 @@ Route::get('/register-user', 'UserController@register')->name('register-user');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+
+    Route::view('reports', 'crime-report')->name('reports');
+});

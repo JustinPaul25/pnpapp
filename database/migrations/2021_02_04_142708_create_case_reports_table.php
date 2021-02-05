@@ -21,11 +21,12 @@ class CreateCaseReportsTable extends Migration
             $table->unsignedBigInteger('prepared_id')->nullable();
             $table->unsignedBigInteger('case_status_id')->nullable();
             $table->date('crime_date');
-            $table->longText('event_detail');
-            $table->longText('action_taken');
-            $table->longText('summary');
-            $table->longText('long');
-            $table->longText('lat');
+            $table->string('focus_crime_type')->nullable();
+            $table->longText('event_detail')->nullable();
+            $table->longText('action_taken')->nullable();
+            $table->longText('summary')->nullable();
+            $table->longText('long')->nullable();
+            $table->longText('lat')->nullable();
             $table->timestamps();
 
             $table->foreign('crime_id')->references('id')->on('crimes')->onDelete('cascade');

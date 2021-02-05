@@ -15,6 +15,7 @@ class CreateCaseStatusesTable extends Migration
     {
         Schema::create('case_statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('status');
             $table->timestamps();
         });
     }

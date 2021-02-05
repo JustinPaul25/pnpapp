@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\RankController;
+use App\Http\Controllers\Api\CrimeController;
+use App\Http\Controllers\Api\ReportStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Police Ranks
+Route::get('/ranks', [RankController::class, 'index']);
+//Crime Type
+Route::get('/crime-type', [CrimeController::class, 'index']);
+//Report Status list
+Route::get('/report-status-list', [ReportStatusController::class, 'index']);

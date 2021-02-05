@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123123')
         ]);
 
-        $user->assignRole(RoleType::ADMINISTRATOR);
+        $user->assignRole(RoleType::POLICEADMIN);
 
         $user = User::create([
             'first_name' => 'Police',
@@ -33,6 +33,17 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123123')
         ]);
 
-        $user->assignRole(RoleType::POLICE);
+        $user->assignRole(RoleType::BRGYADMIN);
+
+        $user = User::create([
+            'first_name' => 'complainant',
+            'last_name' => 'Testing',
+            'rank_id' => 5,
+            'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae quas id est commodi? Enim officiis tempore, consectetur dolore, pariatur, laborum tempora repellendus doloribus architecto eaque iusto vel cumque temporibus dolorem?',
+            'email' => 'complainant@mail.com',
+            'password' => bcrypt('123123')
+        ]);
+
+        $user->assignRole(RoleType::COMPLAINANT);
     }
 }
