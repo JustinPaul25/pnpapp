@@ -23,7 +23,7 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/register-user', 'UserController@register')->name('register-user');
+Route::get('/register', 'UserController@register')->name('register-user');
 
 Auth::routes();
 
@@ -36,8 +36,10 @@ Route::middleware('auth')->group(function () {
 
     Route::view('users', 'users')->name('users');
     Route::post('user', [UserController::class, 'store']);
+    Route::put('user/{user}', [UserController::class, 'update']);
     Route::get('user-detail', [UserController::class, 'detail']);
     Route::get('getUsers', [UserController::class, 'list']);
+    Route::post('check-email', [UserController::class, 'checkMail']);
 
     Route::get('getRanks', [RankController::class, 'list']);
 });

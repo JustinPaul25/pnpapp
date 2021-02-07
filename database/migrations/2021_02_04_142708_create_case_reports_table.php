@@ -17,7 +17,7 @@ class CreateCaseReportsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('crime_id')->nullable();
             $table->unsignedBigInteger('complainant_id')->nullable();
-            $table->unsignedBigInteger('reporting_id')->nullable();
+            $table->unsignedBigInteger('reported_id')->nullable();
             $table->unsignedBigInteger('prepared_id')->nullable();
             $table->unsignedBigInteger('case_status_id')->nullable();
             $table->date('crime_date');
@@ -25,13 +25,13 @@ class CreateCaseReportsTable extends Migration
             $table->longText('event_detail')->nullable();
             $table->longText('action_taken')->nullable();
             $table->longText('summary')->nullable();
-            $table->longText('long')->nullable();
-            $table->longText('lat')->nullable();
+            $table->double('lont', 11, 8);;
+            $table->double('lat', 10, 8);;
             $table->timestamps();
 
             $table->foreign('crime_id')->references('id')->on('crimes')->onDelete('cascade');
             $table->foreign('complainant_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('reporting_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('reported_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('prepared_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('case_status_id')->references('id')->on('case_statuses')->onDelete('cascade');
         });

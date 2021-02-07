@@ -12,16 +12,12 @@ export default {
     },
     getters: {
         users: state => state.users,
-        agentsSelect: state => state.agentsSelect,
         errors: state => state.errors,
         pagination: state => state.pagination
     },
     mutations: {
         setUsers (state, payload) {
             state.users = payload
-        },
-        setAgentsSelect (state, payload) {
-            state.agentsSelect = payload
         },
         setErrors (state, payload) {
             state.errors = payload
@@ -39,12 +35,6 @@ export default {
         },
     },
     actions: {
-        async agentSelect ({commit}) {
-            await axios.get(`/getAgentsSelect`)
-            .then(response => {
-                commit('setAgentsSelect', response.data)
-            })
-        },
         async saveUser ({ dispatch, commit }, payload = {}) {
             try {
                 const response = await axios.post(`/user`, payload)

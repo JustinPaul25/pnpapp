@@ -27,10 +27,14 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@nextcloud/vue-dashboard": "^1.0.1",
+        "fusioncharts": "^3.16.0",
         "request": "^2.88.2",
         "sweetalert2": "^10.14.0",
+        "vue-fusioncharts": "^3.1.0",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-loading-overlay": "^3.4.2",
+        "vuejs-paginate": "^2.1.0",
         "vuex": "^3.6.2"
     }
 }

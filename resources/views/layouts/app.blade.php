@@ -22,11 +22,11 @@
                 <div>
                     <p class="text-xl font-bold text-yellow-500">PNP</p>
                 </div>
-                <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
+                <nav class="flex space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
                         <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
                         @if (Route::has('register'))
-                            <a class="no-underline hover:underline" href="{{ route('register-user') }}">{{ __('Register as Complainant') }}</a>
+                            <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register as Complainant') }}</a>
                         @endif
                     @else
                         <span>
@@ -39,26 +39,43 @@
                             <a href="{{ route('users') }}" class="{{ Request::segment(1) == 'users' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Users
                             </a>
-                            {{--<a href="{{ route('lot') }}" class="{{ Request::segment(1) == 'lot' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
-                                Lots
-                            </a>
-                            <a href="{{ route('agent') }}" class="{{ Request::segment(1) == 'agents' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
-                                Agents
-                            </a>
-                            <a href="{{ route('transaction') }}" class="{{ Request::segment(1) == 'transactions' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
-                                Transactions
-                            </a>
-                            <a href="{{ route('password') }}" class="{{ Request::segment(1) == 'password' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
-                                Change Password
-                            </a> --}}
                         </span>
-                        <a href="{{ route('logout') }}"
-                           class="no-underline hover:underline"
-                           onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                            {{ csrf_field() }}
-                        </form>
+                        <div class="relative group">
+                            <button class="flex flex-row items-center w-full text-base font-bold text-left uppercase bg-transparent rounded-lg md:w-auto md:inline md:mt-0 md:ml-4 focus:outline-none font-montserrat">
+                                <span>My Account</span>
+                            </button>
+                            <div class="absolute z-10 hidden bg-grey-200 group-hover:block bg-gray-800 w-full">
+                                <div class="px-2 pt-2 pb-2 shadow-lg hover:bg-yellow-500 hover:text-gray-800">
+                                    <div class="flex w-full">
+                                      <p class="ml-auto">
+                                          <a href="{{ route('logout') }}"
+                                          class="text-xs no-underline hover:underline">{{ __('Settings') }}</a>
+                                      </p>
+                                    </div>
+                                </div>
+                                <div class="px-2 pt-2 pb-2 shadow-lg hover:bg-yellow-500 hover:text-gray-800">
+                                    <div class="flex w-full">
+                                      <p class="ml-auto">
+                                          <a href="{{ route('logout') }}"
+                                          class="text-xs no-underline hover:underline">{{ __('Change Password') }}</a>
+                                      </p>
+                                    </div>
+                                </div>
+                                <div class="px-2 pt-2 pb-2 shadow-lg hover:bg-yellow-500 hover:text-gray-800 rounded-b-lg">
+                                  <div class="flex w-full">
+                                    <p class="ml-auto">
+                                        <a href="{{ route('logout') }}"
+                                        class="text-xs no-underline hover:underline"
+                                        onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                         {{ csrf_field() }}
+                                     </form>
+                                    </p>
+                                  </div>
+                                </div>
+                            </div>
+                        </div> 
                     @endguest
                 </nav>
             </div>
