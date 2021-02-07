@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="w-full">
-        <reports-list></reports-list>
+        <users-list></users-list>
     </div>
 @endsection

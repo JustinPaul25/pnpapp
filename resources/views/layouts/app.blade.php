@@ -26,7 +26,7 @@
                     @guest
                         <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
                         @if (Route::has('register'))
-                            <a class="no-underline hover:underline" href="{{ route('register-user') }}">{{ __('Register') }}</a>
+                            <a class="no-underline hover:underline" href="{{ route('register-user') }}">{{ __('Register as Complainant') }}</a>
                         @endif
                     @else
                         <span>
@@ -36,6 +36,9 @@
                             <a href="{{ route('reports') }}" class="{{ Request::segment(1) == 'reports' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Crime Reports
                             </a>
+                            <a href="{{ route('users') }}" class="{{ Request::segment(1) == 'users' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
+                                Users
+                            </a>
                             {{--<a href="{{ route('lot') }}" class="{{ Request::segment(1) == 'lot' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Lots
                             </a>
@@ -44,9 +47,6 @@
                             </a>
                             <a href="{{ route('transaction') }}" class="{{ Request::segment(1) == 'transactions' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Transactions
-                            </a>
-                            <a href="{{ route('user') }}" class="{{ Request::segment(1) == 'users' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
-                                Users
                             </a>
                             <a href="{{ route('password') }}" class="{{ Request::segment(1) == 'password' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Change Password
@@ -65,5 +65,10 @@
         </header>
         @yield('content')
     </div>
+    <script>
+        window.config = {
+            user: "{{ auth()->check() ? auth()->user()->id : null }}"
+        };
+    </script>
 </body>
 </html>

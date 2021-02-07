@@ -46,22 +46,17 @@
                                 </p>
                                 @enderror
                             </div>
-                            
+
                             <div class="flex flex-wrap mb-4">
-                                <label for="rank_id" class="block text-gray-700 text-sm font-bold">
-                                    {{ __('Rank') }}:
+                                <label for="description" class="block text-gray-700 text-sm font-bold">
+                                    {{ __('Short Description') }}:
                                 </label>
         
-                                <select id="birth_date" type="text"
-                                    class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('rank_id') @enderror" name="rank_id"
-                                    value="{{ old('rank_id') }}" required autocomplete="birth_date">
-                                    <option value="" selected disabled style="display:none">choose user rank</option>
-                                    @foreach ($ranks as $rank)
-                                        <option value="{{ $rank->id }}">{{ $rank->rank }}</option>
-                                    @endforeach
-                                </select>
+                                <input id="description" type="text"
+                                    class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') @enderror" name="description"
+                                    value="{{ old('description') }}" required autocomplete="description">
         
-                                @error('rank_id')
+                                @error('description')
                                 <p class="text-red-500 text-xs italic mt-4">
                                     {{ $message }}
                                 </p>
@@ -140,21 +135,6 @@
                                     name="password_confirmation" required autocomplete="new-password">
                             </div> 
                         </div>
-                    </div>
-                    <div class="flex flex-wrap mb-4">
-                        <label for="description" class="block text-gray-700 text-sm font-bold">
-                            {{ __('Short Description') }}:
-                        </label>
-
-                        <input id="description" type="text"
-                            class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') @enderror" name="description"
-                            value="{{ old('description') }}" required autocomplete="description">
-
-                        @error('description')
-                        <p class="text-red-500 text-xs italic mt-4">
-                            {{ $message }}
-                        </p>
-                        @enderror
                     </div>
 
                     <div class="flex flex-wrap">

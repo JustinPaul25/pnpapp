@@ -13,6 +13,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        Role::firstOrCreate(['name' => RoleType::ADMIN]);
         Role::firstOrCreate(['name' => RoleType::POLICEADMIN]);
         Role::firstOrCreate(['name' => RoleType::BRGYADMIN]);
         Role::firstOrCreate(['name' => RoleType::COMPLAINANT]);

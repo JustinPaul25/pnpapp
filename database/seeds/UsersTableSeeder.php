@@ -14,11 +14,22 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'first_name' => 'Admin',
+            'first_name' => 'admin',
             'last_name' => 'Testing',
             'rank_id' => 1,
             'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae quas id est commodi? Enim officiis tempore, consectetur dolore, pariatur, laborum tempora repellendus doloribus architecto eaque iusto vel cumque temporibus dolorem?',
             'email' => 'admin@mail.com',
+            'password' => bcrypt('123123')
+        ]);
+
+        $user->assignRole(RoleType::ADMIN);
+
+        $user = User::create([
+            'first_name' => 'Police',
+            'last_name' => 'Testing',
+            'rank_id' => 1,
+            'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae quas id est commodi? Enim officiis tempore, consectetur dolore, pariatur, laborum tempora repellendus doloribus architecto eaque iusto vel cumque temporibus dolorem?',
+            'email' => 'police@mail.com',
             'password' => bcrypt('123123')
         ]);
 
@@ -29,7 +40,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Testing',
             'rank_id' => 5,
             'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae quas id est commodi? Enim officiis tempore, consectetur dolore, pariatur, laborum tempora repellendus doloribus architecto eaque iusto vel cumque temporibus dolorem?',
-            'email' => 'police@mail.com',
+            'email' => 'brgyadmin@mail.com',
             'password' => bcrypt('123123')
         ]);
 

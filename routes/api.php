@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RankController;
 use App\Http\Controllers\Api\CrimeController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\ReportStatusController;
 
 /*
@@ -17,8 +18,12 @@ use App\Http\Controllers\Api\ReportStatusController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () 
+{
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/report', [ReportController::class, 'index']);
 });
 
 //Police Ranks

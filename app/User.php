@@ -38,6 +38,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(RoleType::ADMIN);
+    }
+
     public function isPoliceAdmin(): bool
     {
         return $this->hasRole(RoleType::POLICEADMIN);
