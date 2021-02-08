@@ -33,3 +33,9 @@ Route::get('/ranks', [RankController::class, 'index']);
 Route::get('/crime-type', [CrimeController::class, 'index']);
 //Report Status list
 Route::get('/report-status-list', [ReportStatusController::class, 'index']);
+//missing person list
+Route::get('/missing-person-list', [ReportController::class, 'missingPerson']);
+//most wanted list
+Route::get('/missing-person-list', [ReportController::class, 'mostWanted']);
+//lost and found list
+Route::get('/missing-person-list', [ReportController::class, 'lostAndFound']);

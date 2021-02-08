@@ -31,4 +31,19 @@ class ReportController extends Controller
 
         return response()->json($report);
     }
+
+    public function missingPerson()
+    {
+        return response()->json(CaseReport::where('crime_id', 4)->where('case_status_id', 3)->get());
+    }
+
+    public function mostWanted()
+    {
+        return response()->json(CaseReport::where('crime_id', 5)->where('case_status_id', 3)->get());
+    }
+
+    public function lostAndFound()
+    {
+        return response()->json(CaseReport::where('crime_id', 6)->where('case_status_id', 3)->get());
+    }
 }
