@@ -24,6 +24,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('reports-list', require('./components/Reports.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('users-list', require('./components/Users.vue').default);
+Vue.component('setting', require('./components/Settings.vue').default);
+Vue.component('change-password', require('./components/ChangePassword.vue').default);
 Vue.component('paginate', VuejsPaginate);
 Vue.component('loading', Loading);
 Vue.component('l-map', LMap);

@@ -48,6 +48,20 @@ export default {
                 }
             }
         },
+        async updatePassword ({ dispatch, commit }, payload = {}) {
+            try {
+                const response = await axios.put(`/change-password/${payload.id}`, payload)
+                commit('setErrors', {})
+                return response
+            } catch (error) {
+                if (error.response.status == 422){
+                    commit('setErrors', error.response.data.errors)
+                    return error.response.data.errors
+                } else {
+                    return Promise.reject(error);
+                }
+            }
+        },
         async updateUser ({ dispatch, commit }, payload = {}) {
             try {
                 const response = await axios.put(`/user/${payload.id}`, payload)

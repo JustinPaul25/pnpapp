@@ -126,4 +126,13 @@ class UserController extends Controller
     {
         return new UserResource(auth()->user());
     }
+
+    public function changePassword(User $user, Request $request)
+    {
+        $user->update([
+            'password' => Hash::make($request->input('password'))
+        ]);
+
+        return $user;
+    }
 }

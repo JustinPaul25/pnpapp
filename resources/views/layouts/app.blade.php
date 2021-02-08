@@ -48,15 +48,15 @@
                                 <div class="px-2 pt-2 pb-2 shadow-lg hover:bg-yellow-500 hover:text-gray-800">
                                     <div class="flex w-full">
                                       <p class="ml-auto">
-                                          <a href="{{ route('logout') }}"
-                                          class="text-xs no-underline hover:underline">{{ __('Settings') }}</a>
+                                          <a href="{{ route('setting') }}"
+                                          class="text-xs no-underline hover:underline">{{ __('User Info Settings') }}</a>
                                       </p>
                                     </div>
                                 </div>
                                 <div class="px-2 pt-2 pb-2 shadow-lg hover:bg-yellow-500 hover:text-gray-800">
                                     <div class="flex w-full">
                                       <p class="ml-auto">
-                                          <a href="{{ route('logout') }}"
+                                          <a href="{{ route('change-password') }}"
                                           class="text-xs no-underline hover:underline">{{ __('Change Password') }}</a>
                                       </p>
                                     </div>

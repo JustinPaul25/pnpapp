@@ -24,6 +24,7 @@ class User extends JsonResource
             'mobile_no' => $this->mobile_no,
             'description' => $this->description,
             'role' => $this->roles[0]->name,
+            'birth_date' => $this->birth_date
         ];
     }
 }

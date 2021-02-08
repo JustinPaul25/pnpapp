@@ -33,6 +33,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group(function () {
     Route::view('reports', 'crime-report')->name('reports');
 
+    Route::view('setting', 'setting')->name('setting');
+    Route::view('change-password', 'change-password')->name('change-password');
+    Route::put('change-password/{user}', [UserController::class, 'changePassword']);
+
     Route::view('users', 'users')->name('users');
     Route::post('user', [UserController::class, 'store']);
     Route::put('user/{user}', [UserController::class, 'update']);
