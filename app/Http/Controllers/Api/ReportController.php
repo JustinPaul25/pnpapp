@@ -16,9 +16,10 @@ class ReportController extends Controller
             // focus crime type
             'focus_crime_type' => $request->input('focus_crime_type'),
             'complainant_id' => $request->input('complaint_id'),
-            'reported_id' => $request->input('reported_id'),
+            'reported_by' => $request->input('reported_by'), //<--String nani siya
             'prepared_id' => $request->input('prepared_id'),
             'case_status_id' => 0,
+            'crime_date' => $request->input('crime_date'), //<--field nga akong gi dungag
             'event_detail' => $request->input('event_detail'),
             'action_taken' => $request->input('action_taken'),
             'summary' => $request->input('summary'),
