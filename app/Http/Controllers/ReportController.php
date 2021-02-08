@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
@@ -27,7 +26,5 @@ class ReportController extends Controller
             'lat' => $request->input('lat'),
             'is_witness' => $request->input('is_witness')
         ]);
-
-        return response()->json($report);
     }
 }

@@ -25,8 +25,10 @@ class CreateCaseReportsTable extends Migration
             $table->longText('event_detail')->nullable();
             $table->longText('action_taken')->nullable();
             $table->longText('summary')->nullable();
-            $table->double('lont', 11, 8);;
-            $table->double('lat', 10, 8);;
+            $table->string('address')->nullable();
+            $table->double('long', 11, 8);
+            $table->double('lat', 10, 8);
+            $table->boolean('is_witness');
             $table->timestamps();
 
             $table->foreign('crime_id')->references('id')->on('crimes')->onDelete('cascade');

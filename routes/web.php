@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     if(auth()->user()) {
-        return view('transaction');
+        return view('dashboard');
     } else {
         return view('auth.login');
     }
