@@ -19,6 +19,10 @@ class StatusTableSeeder extends Seeder
         CaseStatus::create([
             'status' => 'Discard'
         ]);
+
+        CaseStatus::create([
+            'status' => 'Approved'
+        ]);
         
         CaseStatus::create([
             'status' => 'Solved'

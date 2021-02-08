@@ -34,9 +34,9 @@ export default {
         },
     },
     actions: {
-        async saveUser ({ dispatch, commit }, payload = {}) {
+        async saveReport ({ dispatch, commit }, payload = {}) {
             try {
-                const response = await axios.post(`/user`, payload)
+                const response = await axios.post(`/report`, payload)
                 commit('setErrors', {})
                 return response
             } catch (error) {

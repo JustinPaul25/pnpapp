@@ -30,7 +30,7 @@
                         @endif
                     @else
                         <span>
-                            <a href="{{ route('dashboard') }}" class="{{ Request::segment(1) == 'dashboard' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
+                            <a href="{{ route('home') }}" class="{{ Request::segment(1) == 'home' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Dashboard
                             </a>
                             <a href="{{ route('reports') }}" class="{{ Request::segment(1) == 'reports' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">

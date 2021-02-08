@@ -14,17 +14,24 @@ class ReportController extends Controller
             // pag gipili niya nga crime type kay focus crime required sia mag input ug
             // focus crime type
             'focus_crime_type' => $request->input('focus_crime_type'),
-            'complainant_id' => $request->input('complaint_id'),
-            'reported_id' => $request->input('reported_id'),
-            'prepared_id' => $request->input('prepared_id'),
-            'case_status_id' => 0,
+            'reported_by' => $request->input('reported_by'),
+            'prepared_id' => auth()->user()->id,
+            'case_status_id' => 3,
+            'crime_date' => $request->input('crime_date'),
             'event_detail' => $request->input('event_detail'),
             'action_taken' => $request->input('action_taken'),
             'summary' => $request->input('summary'),
             'address' => $request->input('address'),
+            'name' => $request->input('name'),
             'long' => $request->input('long'),
             'lat' => $request->input('lat'),
             'is_witness' => $request->input('is_witness')
         ]);
+
+        if($request->hasFile('img')) {
+            $report->addMedia($request->file('img'))->toMediaCollection('report-image');
+        }
+
+        return response()->json($report);
     }
 }

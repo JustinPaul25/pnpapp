@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     if(auth()->user()) {
-        return view('dashboard');
+        return view('home');
     } else {
         return view('auth.login');
     }
@@ -30,8 +31,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-
     Route::view('reports', 'crime-report')->name('reports');
 
     Route::view('users', 'users')->name('users');
@@ -40,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('user-detail', [UserController::class, 'detail']);
     Route::get('getUsers', [UserController::class, 'list']);
     Route::post('check-email', [UserController::class, 'checkMail']);
+
+    Route::post('report', [ReportController::class, 'store']);
 
     Route::get('getRanks', [RankController::class, 'list']);
 });
