@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Rank;
 use App\Types\RoleType;
+use App\Models\CaseReport;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function rank()
     {
         return $this->belongsTo(Rank::class);
+    }
+
+    public function preparedCaseReports()
+    {
+        return $this->hasMany(CaseReport::class, 'prepared_id');
     }
 }

@@ -20,7 +20,7 @@ class ReportController extends Controller
             'reported_by' => $request->input('reported_by'), //<--String nani siya
             'prepared_id' => $request->input('prepared_id'),
             'case_status_id' => 0,
-            'crime_date' => Carbon::now()->format('d-m-Y'), //<--field nga akong gi dungag
+            'crime_date' => Carbon::now()->format('Y-m-d'), //<--field nga akong gi dungag
             'event_detail' => $request->input('event_detail'),
             'action_taken' => $request->input('action_taken'),
             'summary' => $request->input('summary'),

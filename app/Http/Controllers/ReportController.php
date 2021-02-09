@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
+use App\Http\Resources\CaseReport\CaseReportCollection;
 
 class ReportController extends Controller
 {
@@ -37,17 +38,17 @@ class ReportController extends Controller
 
     public function list(Request $request)
     {
-        $users = CaseReport::query();
-        if ($request->filled('sortBy')) {
-            $users = CaseReport::role($request->input('sortBy'));
-        }
-        if($request->filled('search')) {
-            $users = CaseReport::where('first_name', 'LIKE', '%'.$request->input('search').'%')
-            ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
-            ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
-            ->orWhere('email', 'LIKE', '%'.$request->input('search').'%');
-        }
-        $users = $users->paginate(10);
-        return new UserCollection($users);
+        $reports = CaseReport::query();
+        // if ($request->filled('sortBy')) {
+        //     $users = CaseReport::role($request->input('sortBy'));
+        // }
+        // if($request->filled('search')) {
+        //     $users = CaseReport::where('first_name', 'LIKE', '%'.$request->input('search').'%')
+        //     ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+        //     ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
+        //     ->orWhere('email', 'LIKE', '%'.$request->input('search').'%');
+        // }
+        $reports = $reports->paginate(10);
+        return new CaseReportCollection($reports);
     }
 }

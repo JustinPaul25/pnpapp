@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('check-email', [UserController::class, 'checkMail']);
 
     Route::post('report', [ReportController::class, 'store']);
+    Route::get('getReports', [ReportController::class, 'list']);
 
     Route::get('getRanks', [RankController::class, 'list']);
 });

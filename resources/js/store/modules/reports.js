@@ -62,8 +62,8 @@ export default {
                 }
             }
         },
-        async getUsers ({ commit }, payload = {}) {
-            await axios.get(`/getUsers?page=` + payload.params.page, {
+        async getReports ({ commit }, payload = {}) {
+            await axios.get(`/getReports?page=` + payload.params.page, {
                 params: payload.params
             })
             .then(response => {

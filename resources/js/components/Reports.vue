@@ -17,6 +17,43 @@
                 </button>
             </div>
         </div>
+        <div class="px-3 py-4 flex justify-center">
+            <table class="w-full text-md bg-white shadow-md rounded mb-4">
+                <tbody>
+                    <tr class="border-b text-gray-900">
+                        <th class="text-left fali-color p-3 px-5">Date Reported</th>
+                        <th class="text-left fali-color p-3 px-5">Person Name/ Item Name</th>
+                        <th class="text-left fali-color p-3 px-5">Type</th>
+                        <th class="text-left fali-color p-3 px-5">Media</th>
+                        <th></th>
+                    </tr>
+                    <tr v-for="report in reports.data" class="border-b hover:bg-yellow-200 bg-gray-100">
+                        <td class="p-3 px-5 text-gray-900 font-semibold">
+                            <b>{{ report.crime_date }}</b>
+                        </td>
+                        <td class="p-3 px-5 text-gray-900 font-semibold">
+                            <b class="uppercase">{{ report.name }}</b>
+                        </td>
+                        <td class="p-3 px-5 text-gray-900 font-semibold">
+                            <b>{{ report.crime.type }}</b>
+                        </td>
+                        <td class="p-3 px-5 text-gray-900 font-semibold">
+                            <img width="5%" :src="report.image_url" alt="">
+                        </td>
+                        <!-- <td class="p-3 px-5 flex justify-end">
+                            <button @click="openEditModal(user)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                Edit
+                            </button>
+                            <button @click="confirmDelete(user.id)" type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                Delete
+                            </button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <modal name="form" draggable=".window-header" :height="'600px'" :width="'80%'" :clickToClose="false">
             <div class="window-header bg-gray-900 flex py-2 px-2">
                 <p class="font-bold text-yellow-500">Report Form</p>
@@ -179,9 +216,9 @@
         computed: {
             ...mapGetters({
                 ranks: 'rank/ranks',
-                users: 'user/users',
-                errors: 'user/errors',
-                pagination: 'user/pagination'
+                reports: 'report/reports',
+                errors: 'report/errors',
+                pagination: 'report/pagination'
             }),
         },
         methods: {
@@ -243,9 +280,20 @@
                 this.img.url = URL.createObjectURL(this.imageFile);
                 this.img.file_type = event.target.files[0].type
             },
+            async getReports(page = 1) {
+                await this.$store.dispatch('report/getReports', {
+                    params: {
+                        page: page,
+                        search: this.search,
+                        role: this.role,
+                        rank_id: this.rank_id
+                    }
+                })
+            }
         },
         created() {
             this.getCrimesOptions()
+            this.getReports()
         }
     }
 </script>
