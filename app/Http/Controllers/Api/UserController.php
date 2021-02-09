@@ -31,9 +31,6 @@ class UserController extends Controller
 
     public function logout()
     {
-        $this->assertActionUsesMiddleware(LoginController::class, 'logout', $this->authMiddleware);
-
-        $this->post(route('logout'))->assertOk();
-        $this->assertGuest('web');
+        auth()->logout;
     }
 }

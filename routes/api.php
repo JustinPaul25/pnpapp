@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function ()
     });
 
     Route::post('/report', [ReportController::class, 'store']);
-    Route::get('/logout', [UserController::class, 'logout']);
 });
 
 //Police Ranks
@@ -43,3 +42,5 @@ Route::get('/missing-person-list', [ReportController::class, 'mostWanted']);
 Route::get('/missing-person-list', [ReportController::class, 'lostAndFound']);
 //register user
 Route::post('/register', [UserController::class, 'store']);
+//logout
+Route::get('/logout', [UserController::class, 'logout']);
