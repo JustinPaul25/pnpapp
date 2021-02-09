@@ -34,4 +34,20 @@ class ReportController extends Controller
 
         return response()->json($report);
     }
+
+    public function list(Request $request)
+    {
+        $users = CaseReport::query();
+        if ($request->filled('sortBy')) {
+            $users = CaseReport::role($request->input('sortBy'));
+        }
+        if($request->filled('search')) {
+            $users = CaseReport::where('first_name', 'LIKE', '%'.$request->input('search').'%')
+            ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+            ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
+            ->orWhere('email', 'LIKE', '%'.$request->input('search').'%');
+        }
+        $users = $users->paginate(10);
+        return new UserCollection($users);
+    }
 }
