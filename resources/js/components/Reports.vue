@@ -25,7 +25,7 @@
                         <th class="text-left fali-color p-3 px-5">Person Name/ Item Name</th>
                         <th class="text-left fali-color p-3 px-5">Type</th>
                         <th class="text-left fali-color p-3 px-5">Media</th>
-                        <th></th>
+                        <th class="text-left fali-color p-3 px-5"></th>
                     </tr>
                     <tr v-for="report in reports.data" class="border-b hover:bg-yellow-200 bg-gray-100">
                         <td class="p-3 px-5 text-gray-900 font-semibold">
@@ -39,6 +39,9 @@
                         </td>
                         <td class="p-3 px-5 text-gray-900 font-semibold">
                             <img width="5%" :src="report.image_url" alt="">
+                        </td>
+                        <td>
+
                         </td>
                         <!-- <td class="p-3 px-5 flex justify-end">
                             <button @click="openEditModal(user)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
