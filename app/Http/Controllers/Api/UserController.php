@@ -31,6 +31,8 @@ class UserController extends Controller
 
     public function logout()
     {
-        auth()->logout;
+        Auth::guard('web')->logout();
+
+        return;
     }
 }
