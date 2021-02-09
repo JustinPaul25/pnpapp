@@ -29,7 +29,7 @@ class ReportController extends Controller
             'lat' => $request->input('lat'),
             'is_witness' => $request->input('is_witness')
         ]);
-
+        
         if($request->hasFile('img')) {
             $report->addMedia($request->file('img'))->toMediaCollection('report-image');
         }

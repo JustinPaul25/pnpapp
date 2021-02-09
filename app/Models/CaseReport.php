@@ -23,6 +23,11 @@ class CaseReport extends Model implements HasMedia
         return $this->belongsTo(User::class, 'prepared_id');
     }
 
+    public function caseStatus()
+    {
+        return $this->belongsTo(CaseStatus::class);
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('report-image')->singleFile();

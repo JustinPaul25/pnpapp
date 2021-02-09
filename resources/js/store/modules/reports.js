@@ -15,7 +15,7 @@ export default {
         pagination: state => state.pagination
     },
     mutations: {
-        setUsers (state, payload) {
+        setReports (state, payload) {
             state.reports = payload
         },
         setErrors (state, payload) {
@@ -48,9 +48,9 @@ export default {
                 }
             }
         },
-        async updateUser ({ dispatch, commit }, payload = {}) {
+        async updateReport ({ dispatch, commit }, payload = {}) {
             try {
-                const response = await axios.put(`/user/${payload.id}`, payload)
+                const response = await axios.post(`/report-update`, payload)
                 commit('setErrors', {})
                 return response
             } catch (error) {
@@ -67,9 +67,12 @@ export default {
                 params: payload.params
             })
             .then(response => {
-                commit('setUsers', response.data)
+                commit('setReports', response.data)
                 commit('setPagination', response.data)
             })
+        },
+        async markSolved ({ commit }, payload = {}) {
+            await axios.get(`/report-solved/${payload.id}`)
         },
         async deleteUser ({ commit }, payload = {}) {
             try {

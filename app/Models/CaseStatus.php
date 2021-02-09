@@ -8,5 +8,8 @@ class CaseStatus extends Model
 {
     protected $guarded = [];
 
-    
+    public function caseReports()
+    {
+        return $this->hasMany(CaseReport::class);
+    }
 }

@@ -29,6 +29,7 @@ class CaseReport extends JsonResource
             'address' => $this->address,
             'long' => $this->long,
             'lat' => $this->lat,
+            'status' => $this->caseStatus,
             'prepared' => $this->prepared,
             'image_url' => optional($img)->getUrl(),
             'video_url' => optional($video)->getUrl()

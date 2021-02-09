@@ -20,34 +20,40 @@
         <div class="px-3 py-4 flex justify-center">
             <table class="w-full text-md bg-white shadow-md rounded mb-4">
                 <tbody>
-                    <tr class="border-b text-gray-900">
-                        <th class="text-left fali-color p-3 px-5">Date Reported</th>
-                        <th class="text-left fali-color p-3 px-5">Person Name/ Item Name</th>
-                        <th class="text-left fali-color p-3 px-5">Type</th>
-                        <th class="text-left fali-color p-3 px-5">Media</th>
-                        <th class="text-left fali-color p-3 px-5"></th>
+                    <tr class="border-b bg-gray-700">
+                        <th class="text-left text-yellow-500 p-3 px-5">Date Reported</th>
+                        <th class="text-left text-yellow-500 p-3 px-5">Person Name/ Item Name</th>
+                        <th class="text-left text-yellow-500 p-3 px-5">Type</th>
+                        <th class="text-left text-yellow-500 p-3 px-5">Media</th>
+                        <th class="text-left text-yellow-500 p-3 px-5">Status</th>
+                        <th class="text-left text-yellow-500 p-3 px-5"></th>
                     </tr>
                     <tr v-for="report in reports.data" class="border-b hover:bg-yellow-200 bg-gray-100">
                         <td class="p-3 px-5 text-gray-900 font-semibold">
-                            <b>{{ report.crime_date }}</b>
+                            <b class="text-xs">{{ report.crime_date }}</b>
                         </td>
                         <td class="p-3 px-5 text-gray-900 font-semibold">
-                            <b class="uppercase">{{ report.name }}</b>
+                            <b class="uppercase text-xs">{{ report.name }}</b>
                         </td>
                         <td class="p-3 px-5 text-gray-900 font-semibold">
-                            <b>{{ report.crime.type }}</b>
+                            <b class="text-xs">{{ report.crime.type }}</b>
                         </td>
                         <td class="w-8 p-3 px-5 text-gray-900 font-semibold">
                             <img width="100%" :src="report.image_url" alt="">
                         </td>
+                        <td class="p-3 px-5 text-gray-900 font-semibold">
+                            <b class="text-xs">{{ report.status.status }}</b>
+                        </td>
                         <td class="p-3 px-5 flex justify-end">
+                            <button v-show="report.status.id != 4" @click="reportSolved(report.id)" type="button" class="mr-3 text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                Mark as Solved
+                            </button>
                             <button @click="openEditModal(report)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                Edit
+                                View
                             </button>
                             <button @click="confirmDelete(report.id)" type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                Delete
+                                Discard
                             </button>
                         </td>
                     </tr>
@@ -110,7 +116,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
-                                <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Action Taken</label>
+                                <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Summary</label>
                                 <textarea v-model="form.summary" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
@@ -146,7 +152,11 @@
                 </div>
                 <div class="personal w-full border-t border-gray-400 pt-4 my-auto">
                     <div class="flex justify-end mb-4">
-                        <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 ml-auto fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                        <button v-if="isEdit" @click="print()" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            <span>Print</span>
+                        </button>
+                        <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                             <span>{{isEdit ? 'Update' : 'Save'}} Report</span>
                         </button>
@@ -222,6 +232,29 @@
             }),
         },
         methods: {
+            print() {
+                window.open(`report-print/${this.form.id}`);
+            },
+            reportSolved(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Report will mark as Solved!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.updateSolved(id)
+                    }
+                }) 
+            },
+            async updateSolved(id) {
+                this.isLoading = true
+                await this.$store.dispatch('report/markSolved', { id: id });
+                this.getReports(1);
+                this.isLoading = false
+            },
             checkType(crime) {
                 if(crime.id == 4 || crime.id == 5 || crime.id == 6) {
                     return true
@@ -235,8 +268,26 @@
                 this.coordinates.lng = center.lng;
                 this.circle.center = [center.lat, center.lng]
             },
-            openEditModal() {
-
+            openEditModal(report) {
+                this.isEdit = true;
+                this.center = [report.lat, report.long];
+                this.coordinates = {
+                    lat:report.lat,
+                    lng:report.long
+                }
+                this.img.url = report.image_url
+                this.$modal.show('form');
+                this.form = {
+                    id: report.id,
+                    crime_id: report.crime.id,
+                    crime_date: report.crime_date,
+                    name: report.name,
+                    event_detail: report.event_detail,
+                    action_taken: report.action_taken,
+                    summary: report.summary,
+                    address: report.address,
+                    reported_by:report.reported_by
+                }
             },
             openFormModal() {
                 this.isEdit = false;
@@ -260,9 +311,19 @@
                 formData.append('reported_by', this.form.reported_by);
                 formData.append('lat', this.coordinates.lat);
                 formData.append('long', this.coordinates.lng);
-                await this.$store.dispatch('report/saveReport', formData)
-                if(Object.keys(this.errors).length == 0) {
-                    this.closeFormModal();
+                if(this.isEdit) {
+                    formData.append('id', this.form.id);
+                    await this.$store.dispatch('report/updateReport', formData)
+                    if(Object.keys(this.errors).length == 0) {
+                        this.getReports(1)
+                        this.closeFormModal();
+                    }
+                } else {
+                    await this.$store.dispatch('report/saveReport', formData)
+                    if(Object.keys(this.errors).length == 0) {
+                        this.getReports(1)
+                        this.closeFormModal();
+                    }
                 }
                 this.isLoading = false
             },
@@ -278,7 +339,6 @@
                 this.crimes = response.data
             },
             imgChange(event) {
-                console.log(event);
                 this.imageFile = event.target.files[0]
                 this.img.url = URL.createObjectURL(this.imageFile);
                 this.img.file_type = event.target.files[0].type
