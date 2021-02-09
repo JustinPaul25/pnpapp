@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RankController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CrimeController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\ReportStatusController;
@@ -39,3 +40,5 @@ Route::get('/missing-person-list', [ReportController::class, 'missingPerson']);
 Route::get('/missing-person-list', [ReportController::class, 'mostWanted']);
 //lost and found list
 Route::get('/missing-person-list', [ReportController::class, 'lostAndFound']);
+//register user
+Route::post('/register', [UserController::class, 'store']);
