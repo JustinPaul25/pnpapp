@@ -30,6 +30,14 @@ class ReportController extends Controller
             'is_witness' => $request->input('is_witness')
         ]);
 
+        if($request->hasFile('img')) {
+            $report->addMedia($request->file('img'))->toMediaCollection('report-image');
+        }
+
+        if($request->hasFile('video')) {
+            $report->addMedia($request->file('video'))->toMediaCollection('report-video');
+        }
+
         return response()->json($report);
     }
 

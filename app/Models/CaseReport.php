@@ -15,5 +15,6 @@ class CaseReport extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('report-image')->singleFile();
+        $this->addMediaCollection('report-video')->singleFile();
     }
 }
