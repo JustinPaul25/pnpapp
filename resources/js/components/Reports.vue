@@ -235,6 +235,9 @@
                 this.coordinates.lng = center.lng;
                 this.circle.center = [center.lat, center.lng]
             },
+            openEditModal() {
+
+            },
             openFormModal() {
                 this.isEdit = false;
                 // this.clearForm();

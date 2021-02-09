@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\LoginController;
 
 class UserController extends Controller
 {
@@ -28,10 +29,11 @@ class UserController extends Controller
         return $user;
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::guard('web')->logout();
+        $this->assertActionUsesMiddleware(LoginController::class, 'logout', $this->authMiddleware);
 
-        return;
+        $this->post(route('logout'))->assertOk();
+        $this->assertGuest('web');
     }
 }
