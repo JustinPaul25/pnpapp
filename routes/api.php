@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function ()
     });
 
     Route::post('/report', [ReportController::class, 'store']);
+    Route::post('/logout', [UserController::class, 'logout']);
 });
 
 //Police Ranks

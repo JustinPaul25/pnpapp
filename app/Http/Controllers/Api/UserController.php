@@ -6,6 +6,7 @@ use App\User;
 use App\Types\RoleType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -25,5 +26,17 @@ class UserController extends Controller
         $user->assignRole(RoleType::COMPLAINANT);
 
         return $user;
+    }
+
+    public function logout(Request $request)
+    {
+        // Revoke a specific user token
+        Auth::user()->tokens()->where('id', $request->input('id'))->delete();
+        // Get user who requested the logout
+        $user = request()->user(); //or Auth::user()
+        // Revoke current user token
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+
+        return;
     }
 }
