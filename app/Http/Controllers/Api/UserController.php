@@ -30,12 +30,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        // Revoke a specific user token
-        Auth::user()->tokens()->where('id', $request->input('id'))->delete();
-        // Get user who requested the logout
-        $user = request()->user(); //or Auth::user()
-        // Revoke current user token
-        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        Auth::guard('web')->logout();
 
         return;
     }

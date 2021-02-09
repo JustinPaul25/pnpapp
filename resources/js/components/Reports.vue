@@ -37,8 +37,8 @@
                         <td class="p-3 px-5 text-gray-900 font-semibold">
                             <b>{{ report.crime.type }}</b>
                         </td>
-                        <td class="p-3 px-5 text-gray-900 font-semibold">
-                            <img width="5%" :src="report.image_url" alt="">
+                        <td class="w-8 p-3 px-5 text-gray-900 font-semibold">
+                            <img width="100%" :src="report.image_url" alt="">
                         </td>
                         <td class="p-3 px-5 flex justify-end">
                             <button @click="openEditModal(report)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
