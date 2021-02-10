@@ -23,6 +23,7 @@ class ReportController extends Controller
             'crime_date' => Carbon::now()->format('Y-m-d'), //<--field nga akong gi dungag
             'event_detail' => $request->input('event_detail'),
             'action_taken' => $request->input('action_taken'),
+            'name' => $request->input('name'),
             'summary' => $request->input('summary'),
             'address' => $request->input('address'),
             'long' => $request->input('long'),
