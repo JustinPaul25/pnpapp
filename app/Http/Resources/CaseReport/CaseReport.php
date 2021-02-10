@@ -31,6 +31,7 @@ class CaseReport extends JsonResource
             'lat' => $this->lat,
             'status' => $this->caseStatus,
             'prepared' => $this->prepared,
+            'complainant' => $this->complainant,
             'image_url' => optional($img)->getUrl(),
             'video_url' => optional($video)->getUrl()
         ];

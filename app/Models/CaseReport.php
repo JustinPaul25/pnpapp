@@ -23,6 +23,11 @@ class CaseReport extends Model implements HasMedia
         return $this->belongsTo(User::class, 'prepared_id');
     }
 
+    public function complainant()
+    {
+        return $this->belongsTo(User::class, 'complainant_id');
+    }
+
     public function caseStatus()
     {
         return $this->belongsTo(CaseStatus::class);
