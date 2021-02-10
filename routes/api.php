@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\ReportStatusController;
 Route::middleware('auth:sanctum')->group(function () 
 {
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return $request->user()->with('roles');
     });
 
     Route::post('/report', [ReportController::class, 'store']);

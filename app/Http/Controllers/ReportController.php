@@ -75,15 +75,16 @@ class ReportController extends Controller
     public function list(Request $request)
     {
         $reports = CaseReport::query();
-        // if ($request->filled('sortBy')) {
-        //     $users = CaseReport::role($request->input('sortBy'));
-        // }
-        // if($request->filled('search')) {
-        //     $users = CaseReport::where('first_name', 'LIKE', '%'.$request->input('search').'%')
-        //     ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
-        //     ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
-        //     ->orWhere('email', 'LIKE', '%'.$request->input('search').'%');
-        // }
+        if ($request->filled('case_status_id')) {
+            $reports = CaseReport::where('case_status_id', $request->input('case_status_id'));
+        }
+        if ($request->filled('crime_id')) {
+            $reports = $reports->where('crime_id', $request->input('crime_id'));
+        }
+        if($request->filled('search')) {
+            $reports = $reports->where('name', 'LIKE', '%'.$request->input('search').'%');
+        }
+        
         $reports = $reports->paginate(10);
         return new CaseReportCollection($reports);
     }

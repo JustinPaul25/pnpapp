@@ -4,22 +4,16 @@
             :can-cancel="false" 
             :is-full-page="fullPage">
         </loading>
-        <div class="p-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-4xl text-yellow-500 font-bold">
-                    Crime Reports
-                </h1>
-            </div>
+        <div class="mt-4">
+            <h1 class="text-4xl text-yellow-500 font-bold">
+                Crime Reports
+            </h1>
+        </div>
+        <div class="p-4 flex justify-end items-center">
             <div class="flex items-center">
                 <div class="relative text-gray-600 mr-4">
-                    <select v-model="status" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    <input v-model="search" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
-                        <option value="">All Report Status</option>
-                        <option value="Complainant">Pending</option>
-                        <option value="Barangay Administrator">Approved</option>
-                        <option value="Police Administrator">Discarded</option>
-                        <option value="Administrator">Solved</option>
-                    </select>
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -30,6 +24,32 @@
                             d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
                         </svg>
                     </div>
+                    </button>
+                </div>
+                <div class="relative text-gray-600 mr-4">
+                    <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    type="search" name="search" placeholder="Search">
+                        <option value="">All Crimes</option>
+                        <option value="1">Focus Crimes</option>
+                        <option value="2">Drug Related Incidents</option>
+                        <option value="3">End Local Communist Armed Conflict (ELCAC)</option>
+                        <option value="4">Missing persons</option>
+                        <option value="5">Most wanted individuals</option>
+                        <option value="6">Lost and found items</option>
+                    </select>
+                    <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
+                    </button>
+                </div>
+                <div class="relative text-gray-600 mr-4">
+                    <select v-model="status" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    type="search" name="search" placeholder="Search">
+                        <option value="">All Report Status</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Discarded</option>
+                        <option value="3">Approved</option>
+                        <option value="4">Solved</option>
+                    </select>
+                    <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     </button>
                 </div>
                 <button v-show="role != 'view_only'" @click="openFormModal" class="focus:outline-none ml-auto bg-yellow-500 hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center">
@@ -66,7 +86,7 @@
                             <b class="text-xs">{{ report.status.status }}</b>
                         </td>
                         <td class="p-3 px-5 flex justify-end">
-                            <button v-show="report.status.id != 4" @click="reportSolved(report.id)" type="button" class="mr-3 text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                            <button v-show="showSolvedButton(report)" @click="reportSolved(report.id)" type="button" class="mr-3 text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                 Mark as Solved
                             </button>
                             <button @click="openEditModal(report)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
@@ -256,9 +276,20 @@
             },
             crimes: {},
             status: '',
+            search: '',
+            crimeType: '',
+            userInfo: {},
         }),
         watch: {
-
+            search: _.debounce(function(newVal){
+                this.getReports(1)
+            }, 200),
+            status: _.debounce(function(newVal){
+                this.getReports(1)
+            }, 200),
+            crimeType: _.debounce(function(newVal){
+                this.getReports(1)
+            }, 200),
         },
         computed: {
             ...mapGetters({
@@ -269,6 +300,13 @@
             }),
         },
         methods: {
+            showSolvedButton(report) {
+                if(this.userInfo.role == 'Barangay Administrator' || report.status.id != 4) {
+                    return false
+                } else {
+                    return true
+                }
+            },
             print() {
                 window.open(`report-print/${this.form.id}`);
             },
@@ -385,15 +423,21 @@
                     params: {
                         page: page,
                         search: this.search,
-                        role: this.role,
-                        rank_id: this.rank_id
+                        case_status_id: this.status,
+                        crime_id: this.crimeType,
+                        role: this.userInfo.role
                     }
                 })
+            },
+            async getInfo() {
+                const response = await axios.get(`/user-detail`)
+                this.userInfo = response.data.data;
             }
         },
         created() {
             this.getCrimesOptions()
             this.getReports()
+            this.getInfo();
         }
     }
 </script>
