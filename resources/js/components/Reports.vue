@@ -301,7 +301,7 @@
         },
         methods: {
             showSolvedButton(report) {
-                if(this.userInfo.role == 'Barangay Administrator' || report.status.id != 4) {
+                if(this.userInfo.role == 'Barangay Administrator' || report.status.id == 4) {
                     return false
                 } else {
                     return true

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Resources\User\User as UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RankController;
 use App\Http\Controllers\Api\UserController;
@@ -22,7 +23,7 @@ use App\Http\Controllers\Api\ReportStatusController;
 Route::middleware('auth:sanctum')->group(function () 
 {
     Route::get('/user', function (Request $request) {
-        return $request->user()->with('roles');
+        return new UserResource($request->user());
     });
 
     Route::post('/report', [ReportController::class, 'store']);
