@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="w-full flex mt-4">
-          <div class="w-1/2 px-4">
+          <div class="w-1/2 p-8">
             <fusioncharts
             :type="solved.type"
             :width="solved.width"
@@ -83,7 +83,7 @@
             :dataSource="solved.dataSource"
             ></fusioncharts>
           </div>
-          <div class="w-1/2 px-4">
+          <div class="w-1/2 p-8">
             <fusioncharts
             :type="approved.type"
             :width="approved.width"
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="w-full flex mt-4">
-          <div class="w-1/2 px-4">
+          <div class="w-1/2 p-8">
             <fusioncharts
             :type="pending.type"
             :width="pending.width"
@@ -103,7 +103,7 @@
             :dataSource="pending.dataSource"
             ></fusioncharts>
           </div>
-          <div class="w-1/2 px-4">
+          <div class="w-1/2 p-8">
             <fusioncharts
             :type="discard.type"
             :width="discard.width"
@@ -152,7 +152,7 @@ export default {
               "xAxisName": "Month",
               "yAxisName": "Reports",
               "numberSuffix": "",
-              "theme": "fusion",
+              "theme": "candy",
               "formatNumber": "0"
           },
           // Chart Data
@@ -171,7 +171,7 @@ export default {
               "xAxisName": "Month",
               "yAxisName": "Reports",
               "numberSuffix": "",
-              "theme": "fusion",
+              "theme": "amber",
               "formatNumber": "0"
           },
           // Chart Data
@@ -190,7 +190,7 @@ export default {
               "xAxisName": "Month",
               "yAxisName": "Reports",
               "numberSuffix": "",
-              "theme": "fusion",
+              "theme": "candy",
               "formatNumber": "0"
           },
           // Chart Data
@@ -209,7 +209,7 @@ export default {
               "xAxisName": "Month",
               "yAxisName": "Reports",
               "numberSuffix": "",
-              "theme": "fusion",
+              "theme": "amber",
               "formatNumber": "0"
           },
           // Chart Data
