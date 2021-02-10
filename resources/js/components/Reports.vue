@@ -12,6 +12,10 @@
         <div class="p-4 flex justify-end items-center">
             <div class="flex items-center">
                 <div class="relative text-gray-600 mr-4">
+                    <input v-model="date" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    type="date" name="search" placeholder="Search">
+                </div>
+                <div class="relative text-gray-600 mr-4">
                     <input v-model="search" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
@@ -26,7 +30,7 @@
                     </div>
                     </button>
                 </div>
-                <div class="relative text-gray-600 mr-4">
+                <div v-show="userInfo.role != 'Barangay Administrator'" class="relative text-gray-600 mr-4">
                     <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                         <option value="">All Crimes</option>
@@ -40,7 +44,7 @@
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     </button>
                 </div>
-                <div class="relative text-gray-600 mr-4">
+                <div v-show="userInfo.role != 'Barangay Administrator'" class="relative text-gray-600 mr-4">
                     <select v-model="status" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                         <option value="">All Report Status</option>
@@ -92,10 +96,16 @@
                             <button @click="openEditModal(report)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                 View
                             </button>
-                            <button @click="confirmDelete(report.id)" type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                Discard
-                            </button>
+                            <div v-show="report.status.status != 'Discard' && report.status.status != 'Solved'" class="flex">
+                                <button  @click="approvedReport(report.id)" v-show="userInfo.role == 'Barangay Administrator'" type="button" class="text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Approved
+                                </button>
+                                <button @click="discardReport(report.id)" type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    Discard
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -129,7 +139,7 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Reporting For</label>
-                                <select v-model="form.crime_id" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' required>
+                                <select :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.crime_id" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' required>
                                     <option v-show="checkType(crime)" v-for="crime in crimes" :value="crime.id">{{ crime.type }}</option>
                                 </select>
                             </div>
@@ -137,7 +147,7 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >{{ form.crime_id == 6 ? 'Item Name' : 'Person Name'}}</label>
-                                <input v-model="form.name" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
+                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.name" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
                             </div>
                         </div>
                     </div>
@@ -145,13 +155,13 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Case Date</label>
-                                <input v-model="form.crime_date" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='date'  required>
+                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.crime_date" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='date'  required>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Reported By</label>
-                                <input v-model="form.reported_by" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
+                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.reported_by" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
                             </div>
                         </div>
                     </div>
@@ -161,25 +171,25 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Event Detail</label>
-                                <textarea v-model="form.event_detail" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.event_detail" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Action Taken</label>
-                                <textarea v-model="form.action_taken" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.action_taken" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Summary</label>
-                                <textarea v-model="form.summary" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.summary" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-2/4 px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Upload Image</label>
-                                <input type="file" @change="imgChange" id="img" name="img" accept="image/*">
+                                <input :disabled="userInfo.role == 'Barangay Administrator'" type="file" @change="imgChange" id="img" name="img" accept="image/*">
                             </div>
                             <div class='w-2/4 px-3 mb-1'>
                                 <img width="30%" :src="img.url" alt="">
@@ -190,7 +200,7 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Address</label>
-                                <textarea v-model="form.address" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.address" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -212,14 +222,16 @@
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             <span>Print</span>
                         </button>
-                        <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            <span>{{isEdit ? 'Update' : 'Save'}} Report</span>
-                        </button>
-                        <button v-else disabled class="focus:outline-none ml-auto fali-bg hover:bg-orange-400 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-4">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            <span>Saving....</span>
-                        </button>
+                        <div v-show="userInfo.role != 'Barangay Administrator'">
+                            <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                <span>{{isEdit ? 'Update' : 'Save'}} Report</span>
+                            </button>
+                            <button v-else disabled class="focus:outline-none ml-auto fali-bg hover:bg-orange-400 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                <span>Saving....</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,6 +290,7 @@
             status: '',
             search: '',
             crimeType: '',
+            date:'',
             userInfo: {},
         }),
         watch: {
@@ -288,6 +301,9 @@
                 this.getReports(1)
             }, 200),
             crimeType: _.debounce(function(newVal){
+                this.getReports(1)
+            }, 200),
+            date: _.debounce(function(newVal){
                 this.getReports(1)
             }, 200),
         },
@@ -301,7 +317,7 @@
         },
         methods: {
             showSolvedButton(report) {
-                if(this.userInfo.role == 'Barangay Administrator' || report.status.id == 4) {
+                if(this.userInfo.role == 'Barangay Administrator' || report.status.id == 4 || report.status.id == 2) {
                     return false
                 } else {
                     return true
@@ -324,9 +340,49 @@
                     }
                 }) 
             },
+            approvedReport(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Report will be Approved and send to Police Officer!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.reportApproved(id)
+                    }
+                }) 
+            },
+            discardReport(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Report will be DISCARDED!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.updateDiscard(id)
+                    }
+                }) 
+            },
             async updateSolved(id) {
                 this.isLoading = true
                 await this.$store.dispatch('report/markSolved', { id: id });
+                this.getReports(1);
+                this.isLoading = false
+            },
+            async updateDiscard(id) {
+                this.isLoading = true
+                await this.$store.dispatch('report/markDiscard', { id: id });
+                this.getReports(1);
+                this.isLoading = false
+            },
+            async reportApproved(id) {
+                this.isLoading = true
+                await this.$store.dispatch('report/markApproved', { id: id });
                 this.getReports(1);
                 this.isLoading = false
             },
@@ -366,8 +422,21 @@
             },
             openFormModal() {
                 this.isEdit = false;
-                // this.clearForm();
+                this.clearForm();
                 this.$modal.show('form')
+            },
+            clearForm() {
+                this.form = {
+                    id: 0,
+                    crime_id: 0,
+                    crime_date: new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2),
+                    name: '',
+                    event_detail:'',
+                    action_taken:'',
+                    summary:'',
+                    address:'',
+                    reported_by:''
+                }
             },
             closeFormModal() {
                 this.$modal.hide('form')
@@ -425,19 +494,24 @@
                         search: this.search,
                         case_status_id: this.status,
                         crime_id: this.crimeType,
-                        role: this.userInfo.role
+                        role: this.userInfo.role,
+                        date: this.date
                     }
                 })
             },
             async getInfo() {
                 const response = await axios.get(`/user-detail`)
                 this.userInfo = response.data.data;
+                return
+            },
+            async createdMethods() {
+                await this.getInfo();
+                this.getReports()
             }
         },
         created() {
-            this.getCrimesOptions()
-            this.getReports()
-            this.getInfo();
+            this.createdMethods();
+            this.getCrimesOptions();
         }
     }
 </script>

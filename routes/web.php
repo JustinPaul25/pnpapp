@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\UserController;
@@ -18,7 +19,11 @@ use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     if(auth()->user()) {
-        return view('home');
+        if(auth()->user()->isComplainant()) {
+            auth()->user()->logout();
+        } else {
+            return view('home');
+        }
     } else {
         return view('auth.login');
     }
@@ -48,6 +53,13 @@ Route::middleware('auth')->group(function () {
     Route::post('report-update', [ReportController::class, 'update']);
     Route::get('getReports', [ReportController::class, 'list']);
     Route::get('report-solved/{caseReport}', [ReportController::class, 'solved']);
+    Route::get('report-discard/{caseReport}', [ReportController::class, 'discard']);
+    Route::get('report-approved/{caseReport}', [ReportController::class, 'approved']);
+    Route::get('get-all-reports', [ReportController::class, 'all']);
+    Route::get('get-solved', [ReportController::class, 'getSolved']);
+    Route::get('get-approved', [ReportController::class, 'getApproved']);
+    Route::get('get-discard', [ReportController::class, 'getDiscard']);
+    Route::get('get-pending', [ReportController::class, 'getPending']);
 
     Route::get('report-print/{caseReport}', [ReportController::class, 'print']);
 

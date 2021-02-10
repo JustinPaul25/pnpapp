@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Types\MonthType;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
 use App\Http\Resources\CaseReport\CaseReportCollection;
 
 class ReportController extends Controller
 {
+    public function all()
+    {
+        $reports = CaseReport::all();
+        return new CaseReportCollection($reports);
+    }
+
     public function store(Request $request)
     {
         $report = CaseReport::create([
@@ -75,14 +83,23 @@ class ReportController extends Controller
     public function list(Request $request)
     {
         $reports = CaseReport::query();
-        if ($request->filled('case_status_id')) {
-            $reports = CaseReport::where('case_status_id', $request->input('case_status_id'));
+        
+        if($request->input('role') == 'Barangay Administrator') {
+            $reports = CaseReport::where('case_status_id', 1);
+        } else {
+            if ($request->filled('case_status_id')) {
+                $reports = CaseReport::where('case_status_id', $request->input('case_status_id'));
+            }
+            if ($request->filled('crime_id')) {
+                $reports = $reports->where('crime_id', $request->input('crime_id'));
+            }
         }
-        if ($request->filled('crime_id')) {
-            $reports = $reports->where('crime_id', $request->input('crime_id'));
-        }
+        
         if($request->filled('search')) {
             $reports = $reports->where('name', 'LIKE', '%'.$request->input('search').'%');
+        }
+        if($request->filled('date')) {
+            $reports = $reports->where('crime_date',$request->input('date'));
         }
         
         $reports = $reports->paginate(10);
@@ -96,11 +113,61 @@ class ReportController extends Controller
         ]);
     }
 
+    public function discard(CaseReport $caseReport)
+    {
+        return $caseReport->update([
+            'case_status_id' => 2
+        ]);
+    }
+
+    public function approved(CaseReport $caseReport)
+    {
+        return $caseReport->update([
+            'case_status_id' => 3
+        ]);
+    }
+
     public function print(CaseReport $caseReport)
     {
         $report = $caseReport;
         $img = collect($report->media)->firstWhere('collection_name', 'report-image');
         $url = optional($img)->getUrl();
         return view('report-print', compact('report','url'));
+    }
+
+    public function getSolved()
+    {
+        $weekly = CaseReport::where('case_status_id', 4)->get()->groupBy(function($date) {
+            return Carbon::parse($date->crime_date)->format('M');
+        });
+        
+        return response()->json($weekly);
+    }
+
+    public function getApproved()
+    {
+        $weekly = CaseReport::where('case_status_id', 3)->get()->groupBy(function($date) {
+            return Carbon::parse($date->crime_date)->format('M');
+        });
+        
+        return response()->json($weekly);
+    }
+
+    public function getDiscard()
+    {
+        $weekly = CaseReport::where('case_status_id', 2)->get()->groupBy(function($date) {
+            return Carbon::parse($date->crime_date)->format('M');
+        });
+        
+        return response()->json($weekly);
+    }
+
+    public function getPending()
+    {
+        $weekly = CaseReport::where('case_status_id', 1)->get()->groupBy(function($date) {
+            return Carbon::parse($date->crime_date)->format('M');
+        });
+        
+        return response()->json($weekly);
     }
 }

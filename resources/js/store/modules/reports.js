@@ -74,6 +74,12 @@ export default {
         async markSolved ({ commit }, payload = {}) {
             await axios.get(`/report-solved/${payload.id}`)
         },
+        async markDiscard ({ commit }, payload = {}) {
+            await axios.get(`/report-discard/${payload.id}`)
+        },
+        async markApproved ({ commit }, payload = {}) {
+            await axios.get(`/report-approved/${payload.id}`)
+        },
         async deleteUser ({ commit }, payload = {}) {
             try {
                 const response = await axios.delete(`/${payload.id}/user`)

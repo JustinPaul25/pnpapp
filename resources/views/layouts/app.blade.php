@@ -36,9 +36,11 @@
                             <a href="{{ route('reports') }}" class="{{ Request::segment(1) == 'reports' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Crime Reports
                             </a>
+                            @if (auth()->user()->isAdmin())
                             <a href="{{ route('users') }}" class="{{ Request::segment(1) == 'users' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0 hover:text-white hover:underline mr-4">
                                 Users
                             </a>
+                            @endif
                         </span>
                         <div class="relative group">
                             <button class="flex flex-row items-center w-full text-base font-bold text-left uppercase bg-transparent rounded-lg md:w-auto md:inline md:mt-0 md:ml-4 focus:outline-none font-montserrat">

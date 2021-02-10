@@ -7,14 +7,19 @@ import VModal from 'vue-js-modal/dist/index.nocss.js'
 import 'vue-js-modal/dist/styles.css'
 import { global } from './mixins';
 import Swal from 'sweetalert2';
-import VuejsPaginate from 'vuejs-paginate'
-import VueFusionCharts from 'vue-fusioncharts';
-import FusionCharts from 'fusioncharts';
+import VuejsPaginate from 'vuejs-paginate';
 import Column2D from 'fusioncharts/fusioncharts.charts';
-import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
 import VueGeolocation from 'vue-browser-geolocation';
 import { LMap, LTileLayer, LMarker, LCircleMarker, LControl} from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
+// Include the vue-fusioncharts component
+import VueFusionCharts from 'vue-fusioncharts';
+
+//Include the FusionCharts library
+import FusionCharts from 'fusioncharts';
+import Charts from 'fusioncharts/fusioncharts.charts';
+import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
 
 window.Vue = require('vue');
@@ -35,7 +40,7 @@ Vue.component('l-circle-marker', LCircleMarker);
 Vue.component('l-control', LControl);
 
 Vue.use(VModal, { dynamicDefault: { draggable: true } })
-Vue.use(VueFusionCharts, FusionCharts, Column2D, FusionTheme);
+Vue.use(VueFusionCharts, FusionCharts, Charts, FusionTheme)
 Vue.use(VueGeolocation)
 
 Vue.mixin(global)
