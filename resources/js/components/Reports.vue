@@ -60,6 +60,21 @@
                 </tbody>
             </table>
         </div>
+        <div class="flex px-3">
+           <paginate
+                :page-count="pagination.meta.last_page"
+                :click-handler="getReports"
+                :prev-text="`<i class='fas fa-angle-left'></i><b class='focus:outline-none'> Prev</b>`"
+                :next-text="`<b class='focus:outline-none'>Next </b><i class='fas fa-angle-right'></i>`"
+                :container-class="'pagination'"
+                class="flex justify-end focus:outline-none ml-auto"
+                prev-class="focus:outline-none text-sm mr-2 fali-bg hover:bg-yellow-500 text-white py-1 px-2 rounded focus:shadow-outline" 
+                next-class="focus:outline-none text-sm ml-2 fali-bg hover:bg-yellow-500 text-white py-1 px-2 rounded focus:shadow-outline"  
+                page-link-class="focus:outline-none text-sm mt-10 mx-2 hover:bg-yellow-500 text-bg-gray-800 py-1 px-2 rounded focus:shadow-outline" 
+                active-class="focus:outline-none text-sm fali-bg hover:bg-yellow-500 text-white py-1 px-2 rounded focus:shadow-outline"
+                >
+            </paginate>
+        </div>
         <modal name="form" draggable=".window-header" :height="'600px'" :width="'80%'" :clickToClose="false">
             <div class="window-header bg-gray-900 flex py-2 px-2">
                 <p class="font-bold text-yellow-500">Report Form</p>

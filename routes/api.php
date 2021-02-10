@@ -37,9 +37,9 @@ Route::get('/report-status-list', [ReportStatusController::class, 'index']);
 //missing person list
 Route::get('/missing-person-list', [ReportController::class, 'missingPerson']);
 //most wanted list
-Route::get('/missing-person-list', [ReportController::class, 'mostWanted']);
+Route::get('/wanted-list', [ReportController::class, 'mostWanted']);
 //lost and found list
-Route::get('/missing-person-list', [ReportController::class, 'lostAndFound']);
+Route::get('/lost-and-found-list', [ReportController::class, 'lostAndFound']);
 //register user
 Route::post('/register', [UserController::class, 'store']);
 //logout
