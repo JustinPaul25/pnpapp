@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CaseReport\CaseReportCollection;
 
 class ReportController extends Controller
 {
@@ -44,16 +45,19 @@ class ReportController extends Controller
 
     public function missingPerson()
     {
-        return response()->json(CaseReport::where('crime_id', 4)->where('case_status_id', 3)->get());
+        $reports = CaseReport::where('crime_id', 4)->where('case_status_id', 3)->get();
+        return new CaseReportCollection($reports);
     }
 
     public function mostWanted()
     {
-        return response()->json(CaseReport::where('crime_id', 5)->where('case_status_id', 3)->get());
+        $reports = CaseReport::where('crime_id', 5)->where('case_status_id', 3)->get();
+        return new CaseReportCollection($reports);
     }
 
     public function lostAndFound()
     {
-        return response()->json(CaseReport::where('crime_id', 6)->where('case_status_id', 3)->get());
+        $reports = CaseReport::where('crime_id', 6)->where('case_status_id', 3)->get();
+        return new CaseReportCollection($reports);
     }
 }
