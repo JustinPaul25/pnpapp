@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->input('email'))->first();
 
-        if($user->isEmpty()) {
+        if($user != null) {
             $check = Hash::check($request->input('password'), $user->password);
             if($check) {
                 return response()->json($user);
