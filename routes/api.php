@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Resources\User\User as UserResource;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RankController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CrimeController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Resources\User\User as UserResource;
 use App\Http\Controllers\Api\ReportStatusController;
 
 /*
@@ -25,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('/user', function (Request $request) {
         return new UserResource($request->user());
     });
-
-    Route::post('/report', [ReportController::class, 'store']);
 });
 
 //Police Ranks
@@ -45,3 +44,5 @@ Route::get('/lost-and-found-list', [ReportController::class, 'lostAndFound']);
 Route::post('/register', [UserController::class, 'store']);
 //logout
 Route::get('/logout', [UserController::class, 'logout']);
+Route::post('/report', [ReportController::class, 'store']);
+Route::post('/login', [AuthController::class, 'login']);
