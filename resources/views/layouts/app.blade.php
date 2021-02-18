@@ -30,9 +30,11 @@
                         @endif
                     @else
                         <span>
+                            @if (auth()->user()->isAdmin())
                             <a href="{{ route('home') }}" class="{{ Request::segment(1) == 'home' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Dashboard
                             </a>
+                            @endif
                             <a href="{{ route('reports') }}" class="{{ Request::segment(1) == 'reports' ? 'underline font-bold text-yellow-500' : 'text-white' }} block mt-4 lg:inline-block lg:mt-0  hover:text-white hover:underline mr-4">
                                 Crime Reports
                             </a>
