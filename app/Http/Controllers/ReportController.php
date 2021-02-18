@@ -89,6 +89,8 @@ class ReportController extends Controller
         } else {
             if ($request->filled('case_status_id')) {
                 $reports = CaseReport::where('case_status_id', $request->input('case_status_id'));
+            } else {
+                $reports = CaseReport::where('case_status_id', '!=' , 1);
             }
             if ($request->filled('crime_id')) {
                 $reports = $reports->where('crime_id', $request->input('crime_id'));
