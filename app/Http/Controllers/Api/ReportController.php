@@ -14,8 +14,6 @@ class ReportController extends Controller
     {
         $report = CaseReport::create([
             'crime_id' => $request->input('crime_id'),
-            // pag gipili niya nga crime type kay focus crime required sia mag input ug
-            // focus crime type
             'focus_crime_type' => $request->input('focus_crime_type'),
             'complainant_id' => $request->input('complaint_id'),
             'reported_by' => $request->input('reported_by'), //<--String nani siya

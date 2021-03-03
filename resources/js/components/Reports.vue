@@ -126,7 +126,7 @@
                 >
             </paginate>
         </div>
-        <modal name="form" draggable=".window-header" :height="'600px'" :width="'80%'" :clickToClose="false">
+        <modal name="form" draggable=".window-header" :height="'auto'" :width="'80%'" :clickToClose="false">
             <div class="window-header bg-gray-900 flex py-2 px-2">
                 <p class="font-bold text-yellow-500">Report Form</p>
                 <button class="ml-auto text-white focus:outline-none" @click="closeFormModal">
