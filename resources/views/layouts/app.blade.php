@@ -20,7 +20,11 @@
         <header class="bg-gray-900 py-4">
             <div class="container mx-auto flex justify-between items-center px-3">
                 <div>
+                    @if(auth()->user())
+                        <p class="text-xl font-bold text-yellow-500">{{auth()->user()->isBrgyAdmin() ? 'BARANGAY WEB APP' : 'PNP WEB APP'}}</p>
+                    @else
                     <p class="text-xl font-bold text-yellow-500">PNP</p>
+                    @endif
                 </div>
                 <nav class="flex space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
