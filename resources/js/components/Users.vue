@@ -202,7 +202,7 @@
                 </div>
             </div>
         </modal>
-        <modal name="form" draggable=".window-header" :height="'auto'" :width="'70%'" :clickToClose="false">
+        <modal name="form" draggable=".window-header" :height="'autos'" :width="'70%'" :clickToClose="false">
             <div class="window-header bg-gray-900 flex py-2 px-2">
                 <p class="font-bold text-yellow-500">Fill Up Form</p>
                 <button class="ml-auto text-white focus:outline-none" @click="closeModal">
