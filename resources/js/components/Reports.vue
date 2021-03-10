@@ -425,7 +425,7 @@
                 this.form = {
                     id: report.id,
                     crime_id: report.crime.id,
-                    focus_crime_type: repot.focus_crimt_type,
+                    focus_crime_type: report.focus_crimt_type,
                     crime_date: report.crime_date,
                     name: report.name,
                     event_detail: report.event_detail,
