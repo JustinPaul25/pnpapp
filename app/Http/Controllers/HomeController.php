@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(auth()->user()->isBrgyAdmin()) {
+            return view('crime-report');
+        } else {
+            return view('home');
+        }
     }
 }

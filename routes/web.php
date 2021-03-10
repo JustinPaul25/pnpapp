@@ -19,13 +19,7 @@ use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     if(auth()->user()) {
-        if(auth()->user()->isComplainant()) {
-            auth()->user()->logout();
-        } else if (auth()->user()->isBrgyAdmin()) {
-            return view('crime-report');
-        } else {
-            return view('home');
-        }
+        return route('home');
     } else {
         return view('auth.login');
     }

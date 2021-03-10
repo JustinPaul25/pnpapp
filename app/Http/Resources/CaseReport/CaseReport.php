@@ -20,6 +20,7 @@ class CaseReport extends JsonResource
         return [
             'id' => $this->id,
             'crime' => $this->crime,
+            'focus_crime_type' => $this->focus_crime_type,
             'crime_date' => $this->crime_date,
             'name' => $this->name,
             'reported_by' => $this->reported_by,

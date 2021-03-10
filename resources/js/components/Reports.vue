@@ -30,16 +30,16 @@
                     </div>
                     </button>
                 </div>
-                <div v-show="userInfo.role != 'Barangay Administrator'" class="relative text-gray-600 mr-4">
+                <div class="relative text-gray-600 mr-4">
                     <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                         <option value="">All Crimes</option>
                         <option value="1">Focus Crimes</option>
                         <option value="2">Drug Related Incidents</option>
-                        <option value="3">End Local Communist Armed Conflict (ELCAC)</option>
-                        <option value="4">Missing persons</option>
-                        <option value="5">Most wanted individuals</option>
-                        <option value="6">Lost and found items</option>
+                        <option v-show="userInfo.role != 'Barangay Administrator'"  value="3">End Local Communist Armed Conflict (ELCAC)</option>
+                        <option v-show="userInfo.role != 'Barangay Administrator'"  value="4">Missing persons</option>
+                        <option v-show="userInfo.role != 'Barangay Administrator'"  value="5">Most wanted individuals</option>
+                        <option v-show="userInfo.role != 'Barangay Administrator'"  value="6">Lost and found items</option>
                     </select>
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     </button>
@@ -139,15 +139,21 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Reporting For</label>
-                                <select :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.crime_id" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' required>
+                                <select v-model="form.crime_id" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' required>
                                     <option v-show="checkType(crime)" v-for="crime in crimes" :value="crime.id">{{ crime.type }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
+                            <div class='w-full px-3 mb-1' v-show="form.crime_id == 1">
+                                <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >focus Crime Type</label>
+                                <input v-model="form.focus_crime_type" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >{{ form.crime_id == 6 ? 'Item Name' : 'Person Name'}}</label>
-                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.name" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
+                                <input v-model="form.name" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
                             </div>
                         </div>
                     </div>
@@ -155,13 +161,13 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Case Date</label>
-                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.crime_date" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='date'  required>
+                                <input v-model="form.crime_date" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='date'  required>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Reported By</label>
-                                <input :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.reported_by" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
+                                <input v-model="form.reported_by" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text'  required>
                             </div>
                         </div>
                     </div>
@@ -171,25 +177,25 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Event Detail</label>
-                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.event_detail" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea v-model="form.event_detail" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Action Taken</label>
-                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.action_taken" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea v-model="form.action_taken" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Summary</label>
-                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.summary" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea v-model="form.summary" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-2/4 px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Upload Image</label>
-                                <input :disabled="userInfo.role == 'Barangay Administrator'" type="file" @change="imgChange" id="img" name="img" accept="image/*">
+                                <input type="file" @change="imgChange" id="img" name="img" accept="image/*">
                             </div>
                             <div class='w-2/4 px-3 mb-1'>
                                 <img width="30%" :src="img.url" alt="">
@@ -200,7 +206,7 @@
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
                                 <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Address</label>
-                                <textarea :disabled="userInfo.role == 'Barangay Administrator'" v-model="form.address" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
+                                <textarea v-model="form.address" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -222,7 +228,7 @@
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             <span>Print</span>
                         </button>
-                        <div v-show="userInfo.role != 'Barangay Administrator'">
+                        <div>
                             <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
                                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                                 <span>{{isEdit ? 'Update' : 'Save'}} Report</span>
@@ -388,9 +394,17 @@
             },
             checkType(crime) {
                 if(crime.id == 4 || crime.id == 5 || crime.id == 6) {
-                    return true
+                    if(this.userInfo.role != 'Barangay Administrator') {
+                        return true
+                    } else {
+                        return false
+                    }
                 } else {
-                    return false
+                    if(this.userInfo.role == 'Barangay Administrator') {
+                        return true
+                    } else  {
+                        return false
+                    }
                 }
             },
             centerUpdate(center) {
@@ -411,13 +425,14 @@
                 this.form = {
                     id: report.id,
                     crime_id: report.crime.id,
+                    focus_crime_type: repot.focus_crimt_type,
                     crime_date: report.crime_date,
                     name: report.name,
                     event_detail: report.event_detail,
                     action_taken: report.action_taken,
                     summary: report.summary,
                     address: report.address,
-                    reported_by:report.reported_by
+                    reported_by:report.reported_by,
                 }
             },
             openFormModal() {
