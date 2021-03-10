@@ -472,7 +472,7 @@
                 formData.append('img', this.imageFile);
                 formData.append('crime_id', this.form.crime_id);
                 formData.append('crime_date', this.form.crime_date);
-                formDate.append('focus_crime_type', this.form.focus_crime_type);
+                formData.append('focus_crime_type', this.form.focus_crime_type);
                 formData.append('name', this.form.name);
                 formData.append('event_detail', this.form.event_detail);
                 formData.append('action_taken', this.form.action_taken);
