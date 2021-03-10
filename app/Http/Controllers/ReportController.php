@@ -55,7 +55,6 @@ class ReportController extends Controller
             'focus_crime_type' => $request->input('focus_crime_type'),
             'reported_by' => $request->input('reported_by'),
             'prepared_id' => auth()->user()->id,
-            'case_status_id' => 3,
             'crime_date' => $request->input('crime_date'),
             'event_detail' => $request->input('event_detail'),
             'action_taken' => $request->input('action_taken'),
