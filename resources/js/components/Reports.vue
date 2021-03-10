@@ -101,7 +101,7 @@
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     Approved
                                 </button>
-                                <button @click="discardReport(report.id)" type="button" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                <button @click="discardReport(report.id)" type="button" class="ml-2 text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                     Discard
                                 </button>
@@ -224,10 +224,12 @@
                 </div>
                 <div class="personal w-full border-t border-gray-400 pt-4 my-auto">
                     <div class="flex justify-end mb-4">
-                        <button v-if="isEdit" @click="print()" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                            <span>Print</span>
-                        </button>
+                        <div>
+                            <button v-if="printView()" @click="print()" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                <span>Print</span>
+                            </button>
+                        </div>
                         <div>
                             <button v-if="!isLoading" @click="saveReport()" class="focus:outline-none bg-yellow-500 fali-bg hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
                                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
@@ -413,6 +415,13 @@
                 this.coordinates.lng = center.lng;
                 this.circle.center = [center.lat, center.lng]
             },
+            printView() {
+                if(this.userInfo.role != 'Barangay Administrator' && this.isEdit) {
+                    return true
+                } else {
+                    return false
+                }
+            },
             openEditModal(report) {
                 this.isEdit = true;
                 this.center = [report.lat, report.long];
@@ -429,8 +438,8 @@
                     crime_date: report.crime_date,
                     name: report.name,
                     event_detail: report.event_detail,
-                    action_taken: report.action_taken,
-                    summary: report.summary,
+                    action_taken: report.action_taken == null ? '' : report.action_taken,
+                    summary: report.summary == null ? '' : report.summary,
                     address: report.address,
                     reported_by:report.reported_by,
                 }

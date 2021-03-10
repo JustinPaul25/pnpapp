@@ -43,6 +43,9 @@
         <b>Case no. {{$report->id}}</b><br>
         <b>Reporting Officer: {{auth()->user()->first_name.' '.auth()->user()->first_name}}</b><br>
         <b>Incedent: {{$report->crime->type}}</b>
+        @if($report->crime->id == 1)
+          <br><b>Focus Crime Type: {{$report->focus_crime_type}}</b>
+        @endif
       </div>
       <div class="w-1/2">
         <b>Date: {{$report->crime_date}}</b><br>

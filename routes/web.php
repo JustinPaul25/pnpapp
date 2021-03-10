@@ -19,7 +19,7 @@ use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     if(auth()->user()) {
-        return route('home');
+        return view('home');
     } else {
         return view('auth.login');
     }
