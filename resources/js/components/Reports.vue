@@ -261,6 +261,7 @@
                 crime_id: 0,
                 crime_date: new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2),
                 name: '',
+                focus_crime_type:'',
                 event_detail:'',
                 action_taken:'',
                 summary:'',
@@ -471,6 +472,7 @@
                 formData.append('img', this.imageFile);
                 formData.append('crime_id', this.form.crime_id);
                 formData.append('crime_date', this.form.crime_date);
+                formDate.append('focus_crime_type', this.form.focus_crime_type);
                 formData.append('name', this.form.name);
                 formData.append('event_detail', this.form.event_detail);
                 formData.append('action_taken', this.form.action_taken);
