@@ -218,7 +218,7 @@
                                 :radius="circle.radius"
                                 :color="circle.color"
                             />
-                            <l-routing-machine :waypoints="waypoints"/>
+                            <l-routing-machine :waypoints="waypoints" v-show="isEdit"/>
                             </l-map>
                         </div>
                     </div>

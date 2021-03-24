@@ -29,9 +29,6 @@
                 <nav class="flex space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
                         <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @if (Route::has('register'))
-                            <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register as Complainant') }}</a>
-                        @endif
                     @else
                         <span>
                             @if (auth()->user()->isAdmin())
