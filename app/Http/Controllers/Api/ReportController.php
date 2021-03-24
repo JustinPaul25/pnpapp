@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use Carbon\Carbon;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
@@ -56,6 +57,12 @@ class ReportController extends Controller
     public function lostAndFound()
     {
         $reports = CaseReport::where('crime_id', 6)->where('case_status_id', 3)->get();
+        return new CaseReportCollection($reports);
+    }
+
+    public function approvedReports(User $user)
+    {
+        $reports = CaseReport::where('complainant_id', $user->id)->where('case_status_id', 3)->get();
         return new CaseReportCollection($reports);
     }
 }

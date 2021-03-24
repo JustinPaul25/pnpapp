@@ -45,4 +45,5 @@ Route::post('/register', [UserController::class, 'store']);
 //logout
 Route::get('/logout', [UserController::class, 'logout']);
 Route::post('/report', [ReportController::class, 'store']);
+Route::post('/report/{user}/approved', [ReportController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);

@@ -218,6 +218,7 @@
                                 :radius="circle.radius"
                                 :color="circle.color"
                             />
+                            <l-routing-machine :waypoints="waypoints"/>
                             </l-map>
                         </div>
                     </div>
@@ -249,7 +250,13 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import { latLng } from "leaflet";
+    import { latLng, Icon } from "leaflet";
+    delete Icon.Default.prototype._getIconUrl;
+    Icon.Default.mergeOptions({
+        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconUrl: require('leaflet/dist/images/marker-icon.png'),
+        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+    });
     
     export default {
         data: () => ({
@@ -266,12 +273,13 @@
                 action_taken:'',
                 summary:'',
                 address:'',
-                reported_by:''
+                reported_by:'',
             },
             coordinates: {
                 lat:7.305887,
                 lng:125.681082
             },
+            marker: latLng(7.305887, 125.681082),
             imageFile: null,
             img: {
                 url:'',
@@ -287,6 +295,8 @@
             userInfo: {},
             rank_id: '',
             url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            attribution:
+            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             zoom: 15,
             currentCenter: latLng(7.305887, 125.681082),
             center: [7.305887, 125.681082],
@@ -301,6 +311,10 @@
             crimeType: '',
             date:'',
             userInfo: {},
+            waypoints: [
+                { lat: 7.305887, lng: 125.681082 },
+                { lat: 7.283215577690376, lng: 125.67000715565332 }
+            ]
         }),
         watch: {
             search: _.debounce(function(newVal){
@@ -382,18 +396,33 @@
                 await this.$store.dispatch('report/markSolved', { id: id });
                 this.getReports(1);
                 this.isLoading = false
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Case Report Solved!',
+                    text: '',
+                })
             },
             async updateDiscard(id) {
                 this.isLoading = true
                 await this.$store.dispatch('report/markDiscard', { id: id });
                 this.getReports(1);
                 this.isLoading = false
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Case Report Discarded',
+                    text: '',
+                })
             },
             async reportApproved(id) {
                 this.isLoading = true
                 await this.$store.dispatch('report/markApproved', { id: id });
                 this.getReports(1);
                 this.isLoading = false
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Case Report Approved!',
+                    text: '',
+                })
             },
             checkType(crime) {
                 if(crime.id == 4 || crime.id == 5 || crime.id == 6) {
@@ -430,6 +459,7 @@
                     lat:report.lat,
                     lng:report.long
                 }
+                this.waypoints[0] = {lat: report.lat, lng: report.long}
                 this.img.url = report.image_url
                 this.$modal.show('form');
                 this.form = {
@@ -466,7 +496,32 @@
             closeFormModal() {
                 this.$modal.hide('form')
             },
+            checkFields() {
+                var message = [];
+                if(this.form.crime_id == ''){message.push('Crime Type')}
+                if(this.form.crime_date == ''){message.push('Crime Date')}
+                if(this.form.name == ''){message.push('Preson Name or Item Name')}
+                if(this.form.event_detail == null){message.push('Event Detail')}
+                if(this.form.address == ''){message.push('Address')}
+                if(this.form.summary == ''){message.push('Summary')}
+                if(this.form.reported_by == ''){message.push('Reported By')}
+                this.messages = message;
+                return
+            },
             async saveReport() {
+                await this.checkFields();
+                if(this.messages.length > 0) {
+                    var message = '';
+                    for(var ctr = 0; ctr < this.messages.length; ctr++) {
+                        message = message +'*'+ this.messages[ctr] + '  '
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...Please Fill The Following',
+                        text: message,
+                    })
+                    return
+                }
                 this.isLoading = true
                 let formData = new FormData();
                 formData.append('img', this.imageFile);
