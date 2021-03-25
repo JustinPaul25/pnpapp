@@ -100,7 +100,7 @@
                             <b class="text-xs">{{ report.status.status }}</b>
                         </td>
                         <td class="p-3 px-5 flex justify-end">
-                            <button v-show="report.videoUrl != ''" @click="showVideo(report)" type="button" class="text-sm bg-blue-700 hover:bg-blue-900 text-white py-1 px-2 mr-2 rounded focus:outline-none focus:shadow-outline flex">
+                            <button v-show="report.videoUrl == ''" @click="showVideo(report)" type="button" class="text-sm bg-blue-700 hover:bg-blue-900 text-white py-1 px-2 mr-2 rounded focus:outline-none focus:shadow-outline flex">
                                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
                                 Video
                             </button>
