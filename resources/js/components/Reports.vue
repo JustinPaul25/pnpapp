@@ -11,11 +11,11 @@
         </div>
         <div class="p-4 flex justify-end items-center">
             <div class="flex items-center">
-                <div class="relative text-gray-600 mr-4">
-                    <input v-model="date" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                <div class="relative text-gray-600 mr-2">
+                    <input v-model="date" class="border border-orange-500 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                     type="date" name="search" placeholder="Search">
                 </div>
-                <div class="relative text-gray-600 mr-4">
+                <div class="relative text-gray-600 mr-2">
                     <input v-model="search" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
@@ -30,7 +30,7 @@
                     </div>
                     </button>
                 </div>
-                <div class="relative text-gray-600 mr-4">
+                <div class="relative text-gray-600 mr-2">
                     <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                         <option value="">All Crimes</option>
@@ -44,7 +44,7 @@
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     </button>
                 </div>
-                <div class="relative text-gray-600 mr-4">
+                <div class="relative text-gray-600 mr-2">
                     <select v-model="sortBy" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                         <option value="">Sort By:</option>

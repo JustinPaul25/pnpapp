@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Types\MonthType;
+use Barryvdh\DomPDF\PDF;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
 use App\Http\Resources\CaseReport\CaseReportCollection;
@@ -103,7 +104,9 @@ class ReportController extends Controller
             $reports = $reports->where('crime_date',$request->input('date'));
         }
         if($request->filled('sortBy')) {
-            $reports = $reports->orderBy('name', $request->input('sortBy'));
+            $reports = $reports->orderBy('id', $request->input('sortBy'));
+        } else {
+            $reports = $reports->orderBy('id', 'DESC');
         }
         
         $reports = $reports->paginate(10);
@@ -133,10 +136,10 @@ class ReportController extends Controller
 
     public function print(CaseReport $caseReport)
     {
-        $report = $caseReport;
-        $img = collect($report->media)->firstWhere('collection_name', 'report-image');
-        $url = optional($img)->getUrl();
-        return view('report-print', compact('report','url'));
+        // $report = $caseReport;
+        // $img = collect($report->media)->firstWhere('collection_name', 'report-image');
+        // $url = optional($img)->getUrl();
+        return view('document');
     }
 
     public function getSolved()

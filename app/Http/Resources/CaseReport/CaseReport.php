@@ -15,7 +15,7 @@ class CaseReport extends JsonResource
     public function toArray($request)
     {
         $img = collect($this->media)->firstWhere('collection_name', 'report-image');
-        $video = collect($this->media)->firstWhere('collection_name', 'report_video');
+        $video = collect($this->media)->firstWhere('collection_name', 'report-video');
 
         return [
             'id' => $this->id,
