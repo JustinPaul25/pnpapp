@@ -35,7 +35,7 @@ class CaseReport extends JsonResource
             'complainant' => $this->complainant,
             'image_url' => optional($img)->getUrl(),
             'video_url' => optional($video)->getUrl(),
-            'video_type' => optional($img)->mime_type,
+            'video_type' => optional($video)->mime_type,
         ];
     }
 }

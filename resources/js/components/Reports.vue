@@ -227,11 +227,11 @@
                             <h1 class="text-gray-800 text-xl font-bold">Coodinates</h1>
                             <l-map @update:center="centerUpdate" style="height: 200px" :zoom="zoom" :center="center">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-circle-marker
+                            <!-- <l-circle-marker
                                 :lat-lng="circle.center"
                                 :radius="circle.radius"
                                 :color="circle.color"
-                            />
+                            /> -->
                             <l-routing-machine :waypoints="waypoints"/>
                             </l-map>
                         </div>
