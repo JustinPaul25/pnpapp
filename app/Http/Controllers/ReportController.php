@@ -102,6 +102,9 @@ class ReportController extends Controller
         if($request->filled('date')) {
             $reports = $reports->where('crime_date',$request->input('date'));
         }
+        if($request->filled('sortBy')) {
+            $reports = $reports->orderBy('name', $request->input('sortBy'));
+        }
         
         $reports = $reports->paginate(10);
         return new CaseReportCollection($reports);

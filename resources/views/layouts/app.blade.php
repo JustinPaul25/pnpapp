@@ -28,7 +28,7 @@
                 </div>
                 <nav class="flex space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
-                        <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        
                     @else
                         <span>
                             @if (auth()->user()->isAdmin())

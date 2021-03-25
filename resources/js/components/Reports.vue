@@ -44,6 +44,16 @@
                     <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
                     </button>
                 </div>
+                <div class="relative text-gray-600 mr-4">
+                    <select v-model="sortBy" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    type="search" name="search" placeholder="Search">
+                        <option value="">Sort By:</option>
+                        <option value="ASC">Asc</option>
+                        <option value="DESC">Desc</option>
+                    </select>
+                    <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
+                    </button>
+                </div>
                 <div v-show="userInfo.role != 'Barangay Administrator'" class="relative text-gray-600 mr-4">
                     <select v-model="status" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
@@ -58,7 +68,7 @@
                 </div>
                 <button v-show="role != 'view_only'" @click="openFormModal" class="focus:outline-none ml-auto bg-yellow-500 hover:bg-yellow-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center">
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
-                    <span>Add Crime Report</span>
+                    <span>Add</span>
                 </button>
             </div>
         </div>
@@ -90,10 +100,14 @@
                             <b class="text-xs">{{ report.status.status }}</b>
                         </td>
                         <td class="p-3 px-5 flex justify-end">
+                            <button v-show="report.videoUrl != ''" @click="showVideo(report)" type="button" class="text-sm bg-blue-700 hover:bg-blue-900 text-white py-1 px-2 mr-2 rounded focus:outline-none focus:shadow-outline flex">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mr-2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                                Video
+                            </button>
                             <button v-show="showSolvedButton(report)" @click="reportSolved(report.id)" type="button" class="mr-3 text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                 Mark as Solved
                             </button>
-                            <button @click="openEditModal(report)" type="button" class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                            <button @click="openEditModal(report)" type="button" class="mr-2 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                 View
                             </button>
                             <div v-show="report.status.status != 'Discard' && report.status.status != 'Solved'" class="flex">
@@ -101,7 +115,7 @@
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     Approved
                                 </button>
-                                <button @click="discardReport(report.id)" type="button" class="ml-2 text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
+                                <button @click="discardReport(report.id)" type="button" class="mr-2 text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline flex">
                                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1 mb-1 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                     Discard
                                 </button>
@@ -209,7 +223,19 @@
                                 <textarea v-model="form.address" style="resize: none;" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='text' required></textarea>
                             </div>
                         </div>
-                        <div class="mt-2">
+                        <div v-if="isEdit" class="mt-2">
+                            <h1 class="text-gray-800 text-xl font-bold">Coodinates</h1>
+                            <l-map @update:center="centerUpdate" style="height: 200px" :zoom="zoom" :center="center">
+                            <l-tile-layer :url="url"></l-tile-layer>
+                            <l-circle-marker
+                                :lat-lng="circle.center"
+                                :radius="circle.radius"
+                                :color="circle.color"
+                            />
+                            <l-routing-machine :waypoints="waypoints"/>
+                            </l-map>
+                        </div>
+                        <div v-else>
                             <h1 class="text-gray-800 text-xl font-bold">Set Coodinates</h1>
                             <l-map @update:center="centerUpdate" style="height: 200px" :zoom="zoom" :center="center">
                             <l-tile-layer :url="url"></l-tile-layer>
@@ -218,7 +244,6 @@
                                 :radius="circle.radius"
                                 :color="circle.color"
                             />
-                            <l-routing-machine :waypoints="waypoints" v-show="isEdit"/>
                             </l-map>
                         </div>
                     </div>
@@ -242,6 +267,19 @@
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </modal>
+        <modal name="video" draggable=".window-header" :height="'auto'" :width="'80%'" :clickToClose="false">
+            <div class="window-header bg-gray-900 flex py-2 px-2">
+                <p class="font-bold text-yellow-500">Video</p>
+                <button class="ml-auto text-white focus:outline-none" @click="closeVideoModal">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                </button>
+            </div>
+            <div>
+                <div class="w-full px-5 mb-4">
+                    <video width="100%" height="100" :src="videoUrl" :type="mime_type" controls></video>
                 </div>
             </div>
         </modal>
@@ -309,6 +347,8 @@
             status: '',
             search: '',
             crimeType: '',
+            videoUrl:'',
+            mime_type:'',
             date:'',
             userInfo: {},
             waypoints: [
@@ -327,6 +367,9 @@
                 this.getReports(1)
             }, 200),
             date: _.debounce(function(newVal){
+                this.getReports(1)
+            }, 200),
+            sortBy: _.debounce(function(newVal){
                 this.getReports(1)
             }, 200),
         },
@@ -452,6 +495,11 @@
                     return false
                 }
             },
+            showVideo(report) {
+                this.url = report.videoUrl
+                this.mime_type = report.mime_type
+                this.$modal.show('video');
+            },
             openEditModal(report) {
                 this.isEdit = true;
                 this.center = [report.lat, report.long];
@@ -495,6 +543,9 @@
             },
             closeFormModal() {
                 this.$modal.hide('form')
+            },
+            closeVideoModal() {
+                this.$modal.hide('video')
             },
             checkFields() {
                 var message = [];
@@ -571,6 +622,7 @@
             async getReports(page = 1) {
                 await this.$store.dispatch('report/getReports', {
                     params: {
+                        sortBy: this.sortBy,
                         page: page,
                         search: this.search,
                         case_status_id: this.status,
