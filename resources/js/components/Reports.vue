@@ -4,6 +4,71 @@
             :can-cancel="false" 
             :is-full-page="fullPage">
         </loading>
+        <vue-html2pdf
+        :show-layout="false"
+        :float-layout="true"
+        :enable-download="true"
+        :preview-modal="true"
+        :paginate-elements-by-height="1400"
+        :filename="report.name ? report.name : ' '"
+        :pdf-quality="2"
+        :manual-pagination="false"
+        pdf-format="a4"
+        pdf-orientation="landscape"
+        pdf-content-width="100%"
+
+        @progress="onProgress($event)"
+        @hasStartedGeneration="hasStartedGeneration()"
+        @hasGenerated="hasGenerated($event)"
+        ref="html2Pdf"
+    >
+        <section slot="pdf-content">
+            <div class="text-center mb-5">
+                <p style="font-weight: bold; text-decoration: underline; font-size: 100px">POLICE REPORT</p>
+            </div>
+            <div style="display: flex; align-items: stretch;">
+                <div style="width: 50%; margin-left: 30px">
+                    <p><b style="font-weight: bold; font-size: 20px">Case No:</b> {{report.id}}</p><br>
+                    <p><b style="font-weight: bold; font-size: 20px">Reporting Officer:</b> {{userInfo.last_name}}, {{userInfo.first_name}}</p><br>
+                </div>
+                <div style="width: 50%; margin-left: 30px">
+                    <p><b style="font-weight: bold; font-size: 20px">Date:</b> {{report.crime_date}}</p><br>
+                    <p><b style="font-weight: bold; font-size: 20px">Prepared By:</b> {{userInfo.last_name}}, {{userInfo.first_name}}</p><br>
+                </div>
+            </div>
+            <div style="margin-left: 30px; margin-right: 30px">
+                <p><b style="font-weight: bold; font-size: 20px">Incident:</b> {{report.crime.type}}</p><br>
+            </div>
+            <div style="margin-left: 30px; margin-right: 30px">
+                <svg width="100%" height="30">
+                    <rect width="100%" height="10" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
+                    Sorry, your browser does not support inline SVG.  
+                </svg>
+            </div>
+            <div style="margin-left: 30px; margin-top: 20px">
+                <b style="font-weight: bold; font-size: 20px; text-decoration: underline ">Detail of Event:</b><br><br>
+                <p>{{report.event_detail}}</p>
+            </div>
+            <div style="margin-left: 30px">
+                <b style="font-weight: bold; font-size: 20px; text-decoration: underline">Actions Taken:</b><br><br>
+                <p>{{report.action_taken}}</p>
+            </div>
+            <div style="margin-left: 30px; margin-bottom: 30px">
+                <b style="font-weight: bold; font-size: 20px; text-decoration: underline">Summary:</b><br>
+                <p>{{report.summary}}</p>
+            </div>
+            <div style="margin-left: 30px; margin-right: 30px">
+                <svg width="100%" height="30">
+                    <rect width="100%" height="10" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
+                    Sorry, your browser does not support inline SVG.  
+                </svg>
+            </div>
+            <div style="margin-left: 30px; margin-top: 30px">
+                <b style="font-weight: bold; font-size: 20px; text-decoration: underline">Picture:</b><br>
+                <img style="margin-left: auto; margin-right:auto" width="150px" :src="report.image_url" alt="">
+            </div>
+        </section>
+    </vue-html2pdf>
         <div class="mt-4">
             <h1 class="text-4xl text-yellow-500 font-bold">
                 Crime Reports
@@ -239,10 +304,8 @@
                             <h1 class="text-gray-800 text-xl font-bold">Set Coodinates</h1>
                             <l-map @update:center="centerUpdate" style="height: 200px" :zoom="zoom" :center="center">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-circle-marker
+                            <l-marker
                                 :lat-lng="circle.center"
-                                :radius="circle.radius"
-                                :color="circle.color"
                             />
                             </l-map>
                         </div>
@@ -251,9 +314,13 @@
                 <div class="personal w-full border-t border-gray-400 pt-4 my-auto">
                     <div class="flex justify-end mb-4">
                         <div>
-                            <button v-if="printView()" @click="print()" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                            <button v-if="printView()" @click="print('print')" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
                                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                                 <span>Print</span>
+                            </button>
+                            <button v-if="printView()" @click="print('pdf')" class="focus:outline-none bg-blue-500 ml-auto fali-bg hover:bg-blue-300 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center mr-4">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                <span>PDF</span>
                             </button>
                         </div>
                         <div>
@@ -289,6 +356,8 @@
 <script>
     import { mapGetters } from 'vuex'
     import { latLng, Icon } from "leaflet";
+    import VueHtml2pdf from 'vue-html2pdf'
+
     delete Icon.Default.prototype._getIconUrl;
     Icon.Default.mergeOptions({
         iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -297,6 +366,9 @@
     });
     
     export default {
+        components: {
+            VueHtml2pdf
+        },
         data: () => ({
             isLoading: false,
             fullPage: true,
@@ -350,6 +422,11 @@
             videoUrl:'',
             mime_type:'',
             date:'',
+            report: {
+                crime: {
+                    type: 1
+                }
+            },
             userInfo: {},
             waypoints: [
                 { lat: 7.305887, lng: 125.681082 },
@@ -389,8 +466,12 @@
                     return true
                 }
             },
-            print() {
-                window.open(`report-print/${this.form.id}`);
+            print(reportType) {
+                if(reportType == 'pdf') {
+                    this.$refs.html2Pdf.generatePdf()
+                } else {
+                    window.open(`report-print/${this.form.id}/${reportType}`);
+                }
             },
             reportSolved(id) {
                 Swal.fire({
@@ -501,6 +582,7 @@
                 this.$modal.show('video');
             },
             openEditModal(report) {
+                this.report = report
                 this.isEdit = true;
                 this.center = [report.lat, report.long];
                 this.coordinates = {

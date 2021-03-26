@@ -57,7 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::get('get-discard', [ReportController::class, 'getDiscard']);
     Route::get('get-pending', [ReportController::class, 'getPending']);
 
-    Route::get('report-print/{caseReport}', [ReportController::class, 'print']);
+    Route::get('report-print/{caseReport}/print', [ReportController::class, 'print']);
+    Route::get('report-print/{caseReport}/pdf', [ReportController::class, 'print']);
 
     Route::get('getRanks', [RankController::class, 'list']);
 });

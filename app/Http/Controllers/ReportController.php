@@ -8,6 +8,7 @@ use Barryvdh\DomPDF\PDF;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
 use App\Http\Resources\CaseReport\CaseReportCollection;
+use App\Http\Resources\CaseReport\CaseReport as CaseReportResource;
 
 class ReportController extends Controller
 {
@@ -139,7 +140,8 @@ class ReportController extends Controller
         // $report = $caseReport;
         // $img = collect($report->media)->firstWhere('collection_name', 'report-image');
         // $url = optional($img)->getUrl();
-        return view('document');
+        $caseReport = new CaseReportResource($caseReport);
+        return view('document', compact('caseReport'));
     }
 
     public function getSolved()

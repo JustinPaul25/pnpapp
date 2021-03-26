@@ -35,6 +35,7 @@ Vue.component('setting', require('./components/Settings.vue').default);
 Vue.component('change-password', require('./components/ChangePassword.vue').default);
 Vue.component('LRoutingMachine', require('./components/LRoutingMachine.vue').default);
 Vue.component('document', require('./components/Document.vue').default);
+Vue.component('pdf', require('./components/PDF.vue').default);
 Vue.component('paginate', VuejsPaginate);
 Vue.component('loading', Loading);
 Vue.component('l-map', LMap);
@@ -53,7 +54,8 @@ const options = {
     ],
     styles: [
         'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-        'https://unpkg.com/kidlat-css/css/kidlat.css'
+        'https://unpkg.com/kidlat-css/css/kidlat.css',
+        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'
     ]
 }
 
