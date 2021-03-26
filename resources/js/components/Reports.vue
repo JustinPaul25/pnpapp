@@ -301,7 +301,7 @@
                             </l-map>
                         </div>
                         <div v-else>
-                            <h1 class="text-gray-800 text-xl font-bold">Set Coodinates</h1>
+                            <h1 class="text-gray-800 text-xl font-bold">Point Coodinates</h1>
                             <l-map @update:center="centerUpdate" style="height: 200px" :zoom="zoom" :center="center">
                             <l-tile-layer :url="url"></l-tile-layer>
                             <l-marker
