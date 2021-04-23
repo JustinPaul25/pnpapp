@@ -73,6 +73,16 @@
             </div>  
           </div>
         </div>
+        <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+          type="search" name="search" placeholder="Search">
+              <option value="">All Crimes</option>
+              <option value="1">Focus Crimes</option>
+              <option value="2">Drug Related Incidents</option>
+              <option value="3">End Local Communist Armed Conflict (ELCAC)</option>
+              <option value="4">Missing persons</option>
+              <option value="5">Most wanted individuals</option>
+              <option value="6">Lost and found items</option>
+          </select>
         <div class="w-full flex mt-4">
           <div class="w-1/2 p-8">
             <fusioncharts

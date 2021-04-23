@@ -10,7 +10,6 @@ import { global } from './mixins';
 import Swal from 'sweetalert2';
 import VuejsPaginate from 'vuejs-paginate';
 import Column2D from 'fusioncharts/fusioncharts.charts';
-import VueHtmlToPaper from 'vue-html-to-paper';
 
 import VueGeolocation from 'vue-browser-geolocation';
 import { LMap, LTileLayer, LMarker, LCircleMarker, LControl, LPolyline} from 'vue2-leaflet';
@@ -34,8 +33,6 @@ Vue.component('users-list', require('./components/Users.vue').default);
 Vue.component('setting', require('./components/Settings.vue').default);
 Vue.component('change-password', require('./components/ChangePassword.vue').default);
 Vue.component('LRoutingMachine', require('./components/LRoutingMachine.vue').default);
-Vue.component('document', require('./components/Document.vue').default);
-Vue.component('pdf', require('./components/PDF.vue').default);
 Vue.component('paginate', VuejsPaginate);
 Vue.component('loading', Loading);
 Vue.component('l-map', LMap);
@@ -45,21 +42,6 @@ Vue.component('l-circle-marker', LCircleMarker);
 Vue.component('l-control', LControl);
 Vue.component('l-polyline', LPolyline);
 
-const options = {
-    name: '_blank',
-    specs: [
-        'fullscreen=yes',
-        'titlebar=yes',
-        'scrollbars=yes'
-    ],
-    styles: [
-        'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-        'https://unpkg.com/kidlat-css/css/kidlat.css',
-        'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'
-    ]
-}
-
-Vue.use(VueHtmlToPaper, options);
 Vue.use(VModal, { dynamicDefault: { draggable: true } })
 Vue.use(VueFusionCharts, FusionCharts, Charts, FusionTheme)
 Vue.use(VueGeolocation)

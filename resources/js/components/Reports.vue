@@ -622,6 +622,7 @@
                     address:'',
                     reported_by:''
                 }
+                this.img.url = ''
             },
             closeFormModal() {
                 this.$modal.hide('form')
