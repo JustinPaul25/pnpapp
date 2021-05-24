@@ -248,7 +248,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <div class='w-full px-3 mb-1'>
-                                <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Contact No</label>
+                                <label class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Birth Date</label>
                                 <input v-model="form.birth_date" class='appearance-none font-bold block w-full bg-white text-gray-700 border-gray-500 border shadow-inner rounded-md py-1 px-2 leading-tight focus:outline-none  focus:border-orange-500' type='date'  required>
                             </div>
                         </div>
