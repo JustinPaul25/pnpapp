@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use CreatvStudio\Itexmo\Facades\Itexmo;
 use App\Http\Resources\CaseReport\CaseReportCollection;
 
 class ReportController extends Controller
@@ -28,7 +29,8 @@ class ReportController extends Controller
             'address' => $request->input('address'),
             'long' => $request->input('long'),
             'lat' => $request->input('lat'),
-            'is_witness' => $request->input('is_witness')
+            'is_witness' => $request->input('is_witness'),
+            'contact_no' => $request->input('contact_no')
         ]);
         
         if($request->hasFile('img')) {
@@ -38,6 +40,12 @@ class ReportController extends Controller
         if($request->hasFile('video')) {
             $report->addMedia($request->file('video'))->toMediaCollection('report-video');
         }
+
+        // $account_sid = getenv("TWILIO_SID");
+        // $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        // $twilio_number = getenv("TWILIO_NUMBER");
+        // $client = new Client($account_sid, $auth_token);
+        // $client->messages->create($mobile_no, ['from' => $twilio_number, 'body' => $message]);
 
         return response()->json($report);
     }
