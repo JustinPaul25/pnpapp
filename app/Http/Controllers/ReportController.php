@@ -7,6 +7,7 @@ use App\Types\MonthType;
 use Barryvdh\DomPDF\PDF;
 use App\Models\CaseReport;
 use Illuminate\Http\Request;
+use CreatvStudio\Itexmo\Facades\Itexmo;
 use App\Http\Resources\CaseReport\CaseReportCollection;
 use App\Http\Resources\CaseReport\CaseReport as CaseReportResource;
 
@@ -116,6 +117,8 @@ class ReportController extends Controller
 
     public function solved(CaseReport $caseReport)
     {
+        $message = "Your report has been solved!";
+        Itexmo::to($caseReport->complainant()->contact_no)->content($message)->send();
         return $caseReport->update([
             'case_status_id' => 4
         ]);
@@ -123,6 +126,8 @@ class ReportController extends Controller
 
     public function discard(CaseReport $caseReport)
     {
+        $message = "Sorry, your report has been discarded!";
+        Itexmo::to($caseReport->complainant()->contact_no)->content($message)->send();
         return $caseReport->update([
             'case_status_id' => 2
         ]);
@@ -130,6 +135,9 @@ class ReportController extends Controller
 
     public function approved(CaseReport $caseReport)
     {
+        $message = "Your report has been approved!";
+        Itexmo::to($caseReport->complainant()->contact_no)->content($message)->send();
+
         return $caseReport->update([
             'case_status_id' => 3
         ]);

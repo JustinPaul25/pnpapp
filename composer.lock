@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ce6c83c29ce4399dace2442d6e0cde7",
+    "content-hash": "66731f6deec7dc4916ff9a73df999bce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -171,6 +171,65 @@
                 }
             ],
             "time": "2021-01-20T22:51:39+00:00"
+        },
+        {
+            "name": "creatvstudio/itexmo",
+            "version": "v0.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/creatvstudio/itexmo.git",
+                "reference": "909171b9daeae39ca783d86ee7db0ab8c70f40ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/creatvstudio/itexmo/zipball/909171b9daeae39ca783d86ee7db0ab8c70f40ac",
+                "reference": "909171b9daeae39ca783d86ee7db0ab8c70f40ac",
+                "shasum": ""
+            },
+            "require": {
+                "kitetail/zttp": "^0.6.0",
+                "php": "^7.1",
+                "tightenco/collect": "^5.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CreatvStudio\\Itexmo\\ItexmoServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CreatvStudio\\Itexmo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Naval",
+                    "email": "jeff@creatvstudio.ph"
+                }
+            ],
+            "description": "iTexMo API client for PHP.",
+            "homepage": "https://github.com/creatvstudio/itexmo",
+            "keywords": [
+                "creatvstudio",
+                "itexmo",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/creatvstudio/itexmo/issues",
+                "source": "https://github.com/creatvstudio/itexmo/tree/v0.2.4"
+            },
+            "time": "2021-01-15T01:57:12+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -950,6 +1009,56 @@
                 "watermark"
             ],
             "time": "2019-11-02T09:15:47+00:00"
+        },
+        {
+            "name": "kitetail/zttp",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kitetail/zttp.git",
+                "reference": "92662d7f9025b4c9a0b8a585e31810461fcca435"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kitetail/zttp/zipball/92662d7f9025b4c9a0b8a585e31810461fcca435",
+                "reference": "92662d7f9025b4c9a0b8a585e31810461fcca435",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": ">=7.0",
+                "tightenco/collect": "^5.4"
+            },
+            "require-dev": {
+                "laravel/lumen-framework": "5.5.*",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Zttp.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Wathan",
+                    "email": "adam.wathan@gmail.com"
+                }
+            ],
+            "description": "A developer-experience focused HTTP client, optimized for most common use cases.",
+            "keywords": [
+                "Guzzle",
+                "http"
+            ],
+            "support": {
+                "issues": "https://github.com/kitetail/zttp/issues",
+                "source": "https://github.com/kitetail/zttp/tree/master"
+            },
+            "time": "2019-06-10T12:18:52+00:00"
         },
         {
             "name": "laravel/framework",
@@ -5200,6 +5309,60 @@
             "time": "2021-01-27T10:15:41+00:00"
         },
         {
+            "name": "tightenco/collect",
+            "version": "v5.6.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tighten/collect.git",
+                "reference": "d7381736dca44ac17d0805a25191b094e5a22446"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/d7381736dca44ac17d0805a25191b094e5a22446",
+                "reference": "d7381736dca44ac17d0805a25191b094e5a22446",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "symfony/var-dumper": ">=3.1.10"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "nesbot/carbon": "~1.20",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Collect/Support/helpers.php",
+                    "src/Collect/Support/alias.php"
+                ],
+                "psr-4": {
+                    "Tightenco\\Collect\\": "src/Collect"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "Collect - Illuminate Collections as a separate package.",
+            "keywords": [
+                "collection",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/tighten/collect/issues",
+                "source": "https://github.com/tighten/collect/tree/v5.6.33"
+            },
+            "time": "2018-08-09T16:56:26+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.3",
             "source": {
@@ -7479,5 +7642,5 @@
         "php": "^7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
