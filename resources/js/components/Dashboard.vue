@@ -73,16 +73,29 @@
             </div>  
           </div>
         </div>
-        <select v-model="crimeType" class="border border-orange-500 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-          type="search" name="search" placeholder="Search">
-              <option value="">All Crimes</option>
-              <option value="1">Focus Crimes</option>
-              <option value="2">Drug Related Incidents</option>
-              <option value="3">End Local Communist Armed Conflict (ELCAC)</option>
-              <option value="4">Missing persons</option>
-              <option value="5">Most wanted individuals</option>
-              <option value="6">Lost and found items</option>
-          </select>
+        <div class="flex w-full mt-4">
+          <div class="w-1/3 mx-2">
+            <label class='font-bold' >From: </label>
+            <input v-model="from_date" class='border text-gray-800 border-orange-500 bg-white h-10 ml-auto px-5 w-full mt-2 pr-16 rounded-lg text-sm focus:outline-none' type='date'  required>
+          </div>
+          <div class="w-1/3 mx-2">
+            <label class='font-bold' >To: </label>
+            <input v-model="to_date" class='border text-gray-800 border-orange-500 bg-white h-10 ml-auto px-5 w-full mt-2 pr-16 rounded-lg text-sm focus:outline-none' type='date'  required>
+          </div>
+          <div class="w-1/3 mx-2">
+            <label class="font-bold" for="">Crime</label><br>
+            <select v-model="crime" class="border w-full text-gray-800 border-orange-500 bg-white h-10 ml-auto px-5 mt-2 pr-16 rounded-lg text-sm focus:outline-none"
+            type="search" name="search" placeholder="Search">
+                <option value="">All Crimes</option>
+                <option value="1">Focus Crimes</option>
+                <option value="2">Drug Related Incidents</option>
+                <option value="3">End Local Communist Armed Conflict (ELCAC)</option>
+                <option value="4">Missing persons</option>
+                <option value="5">Most wanted individuals</option>
+                <option value="6">Lost and found items</option>
+            </select>
+          </div>
+        </div>
         <div class="w-full flex mt-4">
           <div class="w-1/2 p-8">
             <fusioncharts
@@ -231,8 +244,31 @@ export default {
         approved: 0,
         discard: 0,
         solved: 0
-      }
+      },
+      crime: '',
+      from_date: '',
+      to_date: ''
     }
+  },
+  watch: {
+      crime: _.debounce(function(newVal){
+        this.getSolvedReports()
+        this.getApprovedReports()
+        this.getDiscardReports()
+        this.getPendingReports()
+      }, 200),
+      from_date: _.debounce(function(newVal){
+        this.getSolvedReports()
+        this.getApprovedReports()
+        this.getDiscardReports()
+        this.getPendingReports()
+      }, 200),
+      to_date: _.debounce(function(newVal){
+        this.getSolvedReports()
+        this.getApprovedReports()
+        this.getDiscardReports()
+        this.getPendingReports()
+      }, 200),
   },
   methods: {
     async getDatas() {
@@ -258,7 +294,13 @@ export default {
       let dummyData = 0;
       var monthlines = [];
 
-        await axios.get('/get-approved')
+        await axios.get('/get-approved', {
+                params: {
+                  crime: this.crime,
+                  to_date: this.to_date,
+                  from_date: this.from_date
+                },
+            })
             .then((data)  => {
                 var monthlys = data.data;
 
@@ -330,7 +372,13 @@ export default {
        let dummyData = 0;
        let monthlines = []
 
-        await axios.get('/get-solved')
+        await axios.get('/get-solved', {
+                params: {
+                  crime: this.crime,
+                  to_date: this.to_date,
+                  from_date: this.from_date
+                },
+            })
             .then((data)  => {
                 this.monthlys = data.data;
 
@@ -402,7 +450,13 @@ export default {
       let dummyData = 0;
       var monthlines = [];
 
-        await axios.get('/get-discard')
+        await axios.get('/get-discard', {
+                params: {
+                  crime: this.crime,
+                  to_date: this.to_date,
+                  from_date: this.from_date
+                },
+            })
             .then((data)  => {
                 var monthlys = data.data;
 
@@ -474,7 +528,13 @@ export default {
       let dummyData = 0;
       var monthlines = [];
 
-        await axios.get('/get-pending')
+        await axios.get('/get-pending', {
+                params: {
+                  crime: this.crime,
+                  to_date: this.to_date,
+                  from_date: this.from_date
+                },
+            })
             .then((data)  => {
                 var monthlys = data.data;
 

@@ -144,36 +144,68 @@ class ReportController extends Controller
         return view('document', compact('caseReport'));
     }
 
-    public function getSolved()
+    public function getSolved(Request $request)
     {
-        $weekly = CaseReport::where('case_status_id', 4)->get()->groupBy(function($date) {
+        $weekly = CaseReport::query();
+        $weekly = CaseReport::where('case_status_id', 4);
+        if ($request->filled('crime')) {
+            $weekly = $weekly->where('crime_id', $request->input('crime'));
+        }
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $weekly = $weekly->whereBetween('crime_date', [$request->input('from_date'), $request->input('to_date')]);
+        }
+        $weekly = $weekly->get()->groupBy(function($date) {
             return Carbon::parse($date->crime_date)->format('M');
         });
         
         return response()->json($weekly);
     }
 
-    public function getApproved()
+    public function getApproved(Request $request)
     {
-        $weekly = CaseReport::where('case_status_id', 3)->get()->groupBy(function($date) {
+        $weekly = CaseReport::query();
+        $weekly = CaseReport::where('case_status_id', 3);
+        if ($request->filled('crime')) {
+            $weekly = $weekly->where('crime_id', $request->input('crime'));
+        }
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $weekly = $weekly->whereBetween('crime_date', [$request->input('from_date'), $request->input('to_date')]);
+        }
+        $weekly = $weekly->get()->groupBy(function($date) {
             return Carbon::parse($date->crime_date)->format('M');
         });
         
         return response()->json($weekly);
     }
 
-    public function getDiscard()
+    public function getDiscard(Request $request)
     {
-        $weekly = CaseReport::where('case_status_id', 2)->get()->groupBy(function($date) {
+        $weekly = CaseReport::query();
+        $weekly = CaseReport::where('case_status_id', 2);
+        if ($request->filled('crime')) {
+            $weekly = $weekly->where('crime_id', $request->input('crime'));
+        }
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $weekly = $weekly->whereBetween('crime_date', [$request->input('from_date'), $request->input('to_date')]);
+        }
+        $weekly = $weekly->get()->groupBy(function($date) {
             return Carbon::parse($date->crime_date)->format('M');
         });
         
         return response()->json($weekly);
     }
 
-    public function getPending()
+    public function getPending(Request $request)
     {
-        $weekly = CaseReport::where('case_status_id', 1)->get()->groupBy(function($date) {
+        $weekly = CaseReport::query();
+        $weekly = CaseReport::where('case_status_id', 1);
+        if ($request->filled('crime')) {
+            $weekly = $weekly->where('crime_id', $request->input('crime'));
+        }
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $weekly = $weekly->whereBetween('crime_date', [$request->input('from_date'), $request->input('to_date')]);
+        }
+        $weekly = $weekly->get()->groupBy(function($date) {
             return Carbon::parse($date->crime_date)->format('M');
         });
         

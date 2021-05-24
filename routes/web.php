@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('report-solved/{caseReport}', [ReportController::class, 'solved']);
     Route::get('report-discard/{caseReport}', [ReportController::class, 'discard']);
     Route::get('report-approved/{caseReport}', [ReportController::class, 'approved']);
+    
     Route::get('get-all-reports', [ReportController::class, 'all']);
     Route::get('get-solved', [ReportController::class, 'getSolved']);
     Route::get('get-approved', [ReportController::class, 'getApproved']);
