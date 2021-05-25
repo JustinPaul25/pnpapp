@@ -105,7 +105,6 @@ class UserController extends Controller
             'rank_id' => $request->input('role') == 'Police Administrator' ? $request->input('rank_id') : null,
             'description' => $request->input('description'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
             'birth_Date' => $request->input('birth_date'),
         ]);
 
